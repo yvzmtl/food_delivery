@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:flutter_food_delivery/widgets/big_text.dart';
+import 'package:flutter_food_delivery/widgets/food_info.dart';
 import 'package:flutter_food_delivery/widgets/icon_and_text_widget.dart';
 import 'package:flutter_food_delivery/widgets/small_text.dart';
 
@@ -102,36 +103,87 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           ),
         ),
         // yemek listesi ve resimler
-        Container(
-          height: 900,
-          child: ListView.builder(
-              //shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 10,
-              itemBuilder: (builder, context) {
-                return Container(
-                  margin: EdgeInsets.only(
-                      left: Dimensions.width20, right: Dimensions.width20),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 120,
-                        height: 120,
-                        margin: EdgeInsets.only(bottom: 10),
+        ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: 10,
+            itemBuilder: (builder, context) {
+              return Container(
+                margin: EdgeInsets.only(
+                    left: Dimensions.width20,
+                    right: Dimensions.width20,
+                    bottom: Dimensions.height10),
+                child: Row(
+                  children: [
+                    //image
+                    Container(
+                      width: Dimensions.width120,
+                      height: Dimensions.height120,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius20),
+                        color: Colors.white38,
+                        image: DecorationImage(
+                            image: AssetImage("assets/image/food1.png"),
+                            fit: BoxFit.cover),
+                      ),
+                    ),
+                    //text container
+                    Expanded(
+                      child: Container(
+                        height: Dimensions.height100,
+                        //width: Dimensions.width220,
                         decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(Dimensions.radius20),
-                          color: Colors.white38,
-                          image: DecorationImage(
-                              image: AssetImage("assets/image/food1.png"),
-                              fit: BoxFit.cover),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                bottomRight:
+                                    Radius.circular(Dimensions.radius20),
+                                topRight:
+                                    Radius.circular(Dimensions.radius20))),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: Dimensions.width10,
+                              right: Dimensions.width10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              BigText(
+                                  text:
+                                      "Bal ile sarılmış meyveli krep tatlısı "),
+                              SizedBox(height: Dimensions.height10),
+                              SmallText(
+                                  text: "Çilek ve kivi ile servis edilir"),
+                              SizedBox(height: Dimensions.height10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconAndTextWidget(
+                                      icon: Icons.circle_sharp,
+                                      text: "Normal",
+                                      iconColor: AppColors.iconColor1),
+                                  //SizedBox(width: 10),
+                                  IconAndTextWidget(
+                                      icon: Icons.location_on,
+                                      text: "1.7km",
+                                      iconColor: AppColors.mainColor),
+                                  //SizedBox(width: 10),
+                                  IconAndTextWidget(
+                                      icon: Icons.access_time_filled_rounded,
+                                      text: "30min",
+                                      iconColor: AppColors.iconColor2)
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                );
-              }),
-        ),
+                    ),
+                  ],
+                ),
+              );
+            }),
       ],
     );
   }
@@ -212,47 +264,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     top: Dimensions.height15,
                     left: Dimensions.width15,
                     right: Dimensions.width15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BigText(text: "Pasta"),
-                    SizedBox(height: Dimensions.height10),
-                    Row(children: [
-                      Wrap(
-                          children: List.generate(
-                              5,
-                              (index) => Icon(Icons.star,
-                                  color: AppColors.mainColor,
-                                  size: Dimensions.fontSize15))),
-                      SizedBox(width: Dimensions.width10),
-                      SmallText(text: "4.5"),
-                      SizedBox(width: Dimensions.width30),
-                      SmallText(text: "950"),
-                      SizedBox(width: Dimensions.width10),
-                      SmallText(text: "yorum"),
-                    ]),
-                    SizedBox(height: Dimensions.height20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconAndTextWidget(
-                            icon: Icons.circle_sharp,
-                            text: "Normal",
-                            iconColor: AppColors.iconColor1),
-                        //SizedBox(width: 10),
-                        IconAndTextWidget(
-                            icon: Icons.location_on,
-                            text: "1.7km",
-                            iconColor: AppColors.mainColor),
-                        //SizedBox(width: 10),
-                        IconAndTextWidget(
-                            icon: Icons.access_time_filled_rounded,
-                            text: "30min",
-                            iconColor: AppColors.iconColor2)
-                      ],
-                    ),
-                  ],
-                ),
+                child: FoodInfo(text: "Pasta"),
               ),
             ),
           ),

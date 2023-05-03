@@ -34,6 +34,8 @@ class Dimensions {
   static double height20 = screenHeight / 39;
   static double height30 = screenHeight / 26;
   static double height45 = screenHeight / 17.35;
+  static double height100 = screenHeight / 7.81;
+  static double height120 = screenHeight / 6.5;
 
   //dinamik width padding ve margin
   //  392/10
@@ -43,11 +45,14 @@ class Dimensions {
   static double width20 = screenWidth / 19.6;
   static double width30 = screenWidth / 13;
   static double width45 = screenWidth / 8.71;
+  static double width120 = screenWidth / 3.26;
+  static double width220 = screenWidth / 1.78;
 
 //fontsize
   static double fontSize15 = screenHeight / 52;
   static double fontSize20 = screenHeight / 39;
   static double fontSize24 = screenHeight / 32.54;
+  static double fontSize26 = screenHeight / 30;
 
 //radius
   static double radius5 = screenHeight / 156.2;
@@ -57,4 +62,12 @@ class Dimensions {
 
   //iconSize
   static double iconSize24 = screenHeight / 32.54;
+  static double iconSize16 = screenHeight / 48.81;
+
+  // popular food
+  static double popularFoodImageSize = screenHeight / 2.23;
+
+  // bottom height
+  static double bottomHeight5 = screenHeight / 156.2;
+  static double bottomHeight120 = screenHeight / 6.5;
 }
