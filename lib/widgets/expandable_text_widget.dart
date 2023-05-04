@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:flutter_food_delivery/widgets/small_text.dart';
-import 'package:get/get.dart';
 
 class ExpandableTextWidget extends StatefulWidget {
   final String text;
@@ -39,14 +38,14 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
       child: secondHalf.isEmpty
           ? SmallText(
               height: 1.4,
-              color: AppColors.paraColor,
+              color: Colors.black87,
               size: Dimensions.fontSize15,
               text: firstHalf)
           : Column(
               children: [
                 SmallText(
                     height: 1.4,
-                    color: AppColors.paraColor,
+                    color: Colors.black87,
                     size: Dimensions.fontSize15,
                     text: hiddenText
                         ? (firstHalf + "...")

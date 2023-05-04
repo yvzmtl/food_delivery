@@ -29,11 +29,13 @@ class Dimensions {
 
 //781/10 = 78.1
 //dinamik height padding ve margin
+  static double height5 = screenHeight / 156.2;
   static double height10 = screenHeight / 78;
   static double height15 = screenHeight / 52;
   static double height20 = screenHeight / 39;
   static double height30 = screenHeight / 26;
   static double height45 = screenHeight / 17.35;
+  static double height80 = screenHeight / 9.76;
   static double height100 = screenHeight / 7.81;
   static double height120 = screenHeight / 6.5;
 
