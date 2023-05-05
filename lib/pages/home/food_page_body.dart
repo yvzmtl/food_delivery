@@ -1,11 +1,15 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
+import 'package:flutter_food_delivery/models/products_model.dart';
+import 'package:flutter_food_delivery/utils/app_constants.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:flutter_food_delivery/widgets/big_text.dart';
 import 'package:flutter_food_delivery/widgets/food_info.dart';
 import 'package:flutter_food_delivery/widgets/icon_and_text_widget.dart';
 import 'package:flutter_food_delivery/widgets/small_text.dart';
+import 'package:get/get.dart';
 
 class FoodPageBody extends StatefulWidget {
   const FoodPageBody({super.key});
@@ -43,29 +47,36 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     return Column(
       children: [
         //slider
-        Container(
-          //color: Colors.amber,
-          height: Dimensions.pageView,
-          child: PageView.builder(
-              controller: pageController,
-              itemCount: 5,
-              itemBuilder: (context, position) {
-                return _buildPageItem(position);
-              }),
-        ),
+        GetBuilder<PopularProductController>(builder: (popularProducts) {
+          return Container(
+            //color: Colors.amber,
+            height: Dimensions.pageView,
+            child: PageView.builder(
+                controller: pageController,
+                itemCount: popularProducts.popularProductList.length,
+                itemBuilder: (context, position) {
+                  return _buildPageItem(
+                      position, popularProducts.popularProductList[position]);
+                }),
+          );
+        }),
 
         //dots
-        new DotsIndicator(
-          dotsCount: 5,
-          position: _currentPageValue,
-          decorator: DotsDecorator(
-            activeColor: AppColors.mainColor,
-            size: Size.square(9.0),
-            activeSize: Size(Dimensions.width20, Dimensions.height10),
-            activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(Dimensions.radius5)),
-          ),
-        ),
+        GetBuilder<PopularProductController>(builder: (popularProducts) {
+          return DotsIndicator(
+            dotsCount: popularProducts.popularProductList.isEmpty
+                ? 1
+                : popularProducts.popularProductList.length,
+            position: _currentPageValue,
+            decorator: DotsDecorator(
+              activeColor: AppColors.mainColor,
+              size: const Size.square(9.0),
+              activeSize: Size(Dimensions.width20, Dimensions.height10),
+              activeShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Dimensions.radius5)),
+            ),
+          );
+        }),
 
         /* SmoothPageIndicator(
           controller: pageController, // PageController
@@ -97,7 +108,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 2),
-                child: SmallText(text: "Yemek Eşleştirme"),
+                child: SmallText(text: "Yemek Önerileri"),
               ),
             ],
           ),
@@ -188,7 +199,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     );
   }
 
-  Widget _buildPageItem(int position) {
+  Widget _buildPageItem(int position, ProductsModel popularProduct) {
     Matrix4 matrix = new Matrix4.identity();
     if (position == _currentPageValue.floor()) {
       var currentScale =
@@ -234,7 +245,10 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               borderRadius: BorderRadius.circular(Dimensions.radius30),
               //color: position.isEven ? Color(0xFF89dad0) : Color(0xFF5445b2),
               image: DecorationImage(
-                  image: AssetImage("assets/image/food1.png"),
+                  //image: AssetImage("assets/image/food1.png"),
+                  image: NetworkImage(AppConstants.BASE_URL +
+                      "/uploads/" +
+                      popularProduct.img!),
                   fit: BoxFit.fill),
             ),
           ),
