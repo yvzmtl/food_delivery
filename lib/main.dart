@@ -5,6 +5,7 @@ import 'package:flutter_food_delivery/pages/food/popular_food_detail.dart';
 import 'package:flutter_food_delivery/pages/food/recommended_food_detail.dart';
 import 'package:flutter_food_delivery/pages/home/food_page_body.dart';
 import 'package:flutter_food_delivery/pages/home/main_food_page.dart';
+import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:get/get.dart';
 import 'helper/dependencies.dart' as dep;
 
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: MainFoodPage(),
+      //initialRoute: RouteHelper.initial,
+      getPages: RouteHelper.routes,
     );
   }
 }

@@ -8,7 +8,8 @@ import 'package:flutter_food_delivery/widgets/small_text.dart';
 
 class FoodInfo extends StatelessWidget {
   final String text;
-  const FoodInfo({super.key, required this.text});
+  final int stars;
+  const FoodInfo({super.key, required this.text, required this.stars});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +21,12 @@ class FoodInfo extends StatelessWidget {
         Row(children: [
           Wrap(
               children: List.generate(
-                  5,
+                  stars,
                   (index) => Icon(Icons.star,
                       color: AppColors.mainColor,
                       size: Dimensions.fontSize15))),
           SizedBox(width: Dimensions.width10),
-          SmallText(text: "4.5"),
+          SmallText(text: stars.toString()),
           SizedBox(width: Dimensions.width30),
           SmallText(text: "950"),
           SizedBox(width: Dimensions.width10),

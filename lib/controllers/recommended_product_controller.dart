@@ -13,6 +13,8 @@ class RecommendedProductController extends GetxController {
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
 
+  int _quantity = 0;
+
   Future<void> getRecommendedProductList() async {
     Response response =
         await recommendedProductRepository.getRecommendedProductList();
@@ -34,6 +36,14 @@ class RecommendedProductController extends GetxController {
       }
     } catch (e) {
       print("Recommended Controller da hata =  " + e.toString());
+    }
+  }
+
+  void setQuantity(bool isIncrement) {
+    if (isIncrement) {
+      _quantity = _quantity + 1;
+    } else {
+      _quantity = _quantity - 1;
     }
   }
 }

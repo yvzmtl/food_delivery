@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
+import 'package:flutter_food_delivery/models/products_model.dart';
+import 'package:flutter_food_delivery/routes/route.helper.dart';
+import 'package:flutter_food_delivery/utils/app_constants.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:flutter_food_delivery/widgets/app_icon.dart';
 import 'package:flutter_food_delivery/widgets/big_text.dart';
 import 'package:flutter_food_delivery/widgets/expandable_text_widget.dart';
+import 'package:get/get.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
-  const RecommendedFoodDetail({super.key});
+  //ProductsModel recommendedProductList;
+  // RecommendedFoodDetail(this.recommendedProductList, {super.key});
+  int pageId;
+  RecommendedFoodDetail({super.key, required this.pageId});
 
   @override
   Widget build(BuildContext context) {
+    var recommendedProductList =
+        Get.find<RecommendedProductController>().recommendedProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: Dimensions.height80,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppIcon(icon: Icons.clear),
+                GestureDetector(
+                    onTap: () {
+                      Get.toNamed(RouteHelper.getInitial());
+                    },
+                    child: AppIcon(icon: Icons.clear)),
                 AppIcon(icon: Icons.shopping_cart_outlined)
               ],
             ),
@@ -28,7 +43,9 @@ class RecommendedFoodDetail extends StatelessWidget {
               child: Container(
                 //color: Colors.white,
                 child: Center(
-                    child: BigText(text: "Pasta", size: Dimensions.fontSize26)),
+                    child: BigText(
+                        text: recommendedProductList.name!,
+                        size: Dimensions.fontSize26)),
                 width: double.maxFinite,
                 padding: EdgeInsets.only(
                     top: Dimensions.height5, bottom: Dimensions.height10),
@@ -43,9 +60,15 @@ class RecommendedFoodDetail extends StatelessWidget {
             backgroundColor: AppColors.yellowColor,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset("assets/image/food1.png",
-                  width: double.maxFinite, fit: BoxFit.cover),
-            ),
+                background: Image(
+                    image: NetworkImage(AppConstants.BASE_URL +
+                        AppConstants.UPLOAD_URL +
+                        recommendedProductList.img!),
+                    width: double.maxFinite,
+                    fit: BoxFit.cover)
+                // Image.asset("assets/image/food1.png",
+                //     width: double.maxFinite, fit: BoxFit.cover),
+                ),
           ),
           SliverToBoxAdapter(
               child: Column(
@@ -56,18 +79,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     right: Dimensions.width15,
                     bottom: Dimensions.height20),
                 child: ExpandableTextWidget(
-                    text: "Altyapı Akademileri Projesi kapsamında Altyapı Akademilerinde Türkiye Modeli oluşturmak ve sürdürebilmek adına TFF Başkanı Mehmet Büyükekşi ile yönetim kurulu üyelerinin kulüp akademilerini ziyaret ederek yaptığı toplantılar Ankara kulüpleriyle devam etti." +
-                        "Toplantılarda TFF Başkan Vekili Nüket Küçükel Ezberci, Süper Lig Kulüplerinden Sorumlu Yönetim Kurulu Üyesi Müslüm Özmen ve 1. Lig Kulüplerinden Sorumlu Yönetim Kurulu Üyesi Talat Papatya da hazır bulundu." +
-                        "TFF Başkanı Mehmet Büyükekşi ve yönetim kurulu üyelerinin Ankara'daki ilk durağı MKE Ankaragücü oldu. Ankaragücü Başkanı Faruk Koca ve yönetim kurulu üyelerinin ev sahipliğinde yapılan toplantıda kulübün Gençlik Geliştirme Programı Sorumlusu Ümit Turmuş da TFF heyetine bir sunum yaptı." +
-                        "Altyapı Akademileri Projesi kapsamında Altyapı Akademilerinde Türkiye Modeli oluşturmak ve sürdürebilmek adına TFF Başkanı Mehmet Büyükekşi ile yönetim kurulu üyelerinin kulüp akademilerini ziyaret ederek yaptığı toplantılar Ankara kulüpleriyle devam etti." +
-                        "Toplantılarda TFF Başkan Vekili Nüket Küçükel Ezberci, Süper Lig Kulüplerinden Sorumlu Yönetim Kurulu Üyesi Müslüm Özmen ve 1. Lig Kulüplerinden Sorumlu Yönetim Kurulu Üyesi Talat Papatya da hazır bulundu." +
-                        "TFF Başkanı Mehmet Büyükekşi ve yönetim kurulu üyelerinin Ankara'daki ilk durağı MKE Ankaragücü oldu. Ankaragücü Başkanı Faruk Koca ve yönetim kurulu üyelerinin ev sahipliğinde yapılan toplantıda kulübün Gençlik Geliştirme Programı Sorumlusu Ümit Turmuş da TFF heyetine bir sunum yaptı." +
-                        "Altyapı Akademileri Projesi kapsamında Altyapı Akademilerinde Türkiye Modeli oluşturmak ve sürdürebilmek adına TFF Başkanı Mehmet Büyükekşi ile yönetim kurulu üyelerinin kulüp akademilerini ziyaret ederek yaptığı toplantılar Ankara kulüpleriyle devam etti." +
-                        "Toplantılarda TFF Başkan Vekili Nüket Küçükel Ezberci, Süper Lig Kulüplerinden Sorumlu Yönetim Kurulu Üyesi Müslüm Özmen ve 1. Lig Kulüplerinden Sorumlu Yönetim Kurulu Üyesi Talat Papatya da hazır bulundu." +
-                        "TFF Başkanı Mehmet Büyükekşi ve yönetim kurulu üyelerinin Ankara'daki ilk durağı MKE Ankaragücü oldu. Ankaragücü Başkanı Faruk Koca ve yönetim kurulu üyelerinin ev sahipliğinde yapılan toplantıda kulübün Gençlik Geliştirme Programı Sorumlusu Ümit Turmuş da TFF heyetine bir sunum yaptı." +
-                        "Altyapı Akademileri Projesi kapsamında Altyapı Akademilerinde Türkiye Modeli oluşturmak ve sürdürebilmek adına TFF Başkanı Mehmet Büyükekşi ile yönetim kurulu üyelerinin kulüp akademilerini ziyaret ederek yaptığı toplantılar Ankara kulüpleriyle devam etti." +
-                        "Toplantılarda TFF Başkan Vekili Nüket Küçükel Ezberci, Süper Lig Kulüplerinden Sorumlu Yönetim Kurulu Üyesi Müslüm Özmen ve 1. Lig Kulüplerinden Sorumlu Yönetim Kurulu Üyesi Talat Papatya da hazır bulundu." +
-                        "TFF Başkanı Mehmet Büyükekşi ve yönetim kurulu üyelerinin Ankara'daki ilk durağı MKE Ankaragücü oldu. Ankaragücü Başkanı Faruk Koca ve yönetim kurulu üyelerinin ev sahipliğinde yapılan toplantıda kulübün Gençlik Geliştirme Programı Sorumlusu Ümit Turmuş da TFF heyetine bir sunum yaptı."),
+                    text: recommendedProductList.description!),
               )
             ],
           ))
@@ -91,7 +103,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     backgroundColor: AppColors.mainColor,
                     iconColor: Colors.white),
                 BigText(
-                  text: "12.88₺ " + "X " + "0",
+                  text: "${recommendedProductList.price!} ₺ X 0",
                   color: AppColors.mainBlackColor,
                   size: Dimensions.fontSize26,
                 ),
@@ -142,7 +154,8 @@ class RecommendedFoodDetail extends StatelessWidget {
                       borderRadius: BorderRadius.circular(Dimensions.radius20),
                       color: AppColors.mainColor),
                   child: BigText(
-                      text: " 12.88₺ | Sepete ekle", color: Colors.white),
+                      text: " ${recommendedProductList.price!} ₺ | Sepete ekle",
+                      color: Colors.white),
                 ),
               ],
             ),
