@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
 import 'package:flutter_food_delivery/pages/home/food_page_body.dart';
 import 'package:flutter_food_delivery/pages/home/main_food_page.dart';
@@ -9,8 +10,6 @@ import 'package:flutter_food_delivery/widgets/app_icon.dart';
 import 'package:flutter_food_delivery/widgets/big_text.dart';
 import 'package:flutter_food_delivery/widgets/expandable_text_widget.dart';
 import 'package:flutter_food_delivery/widgets/food_info.dart';
-import 'package:flutter_food_delivery/widgets/icon_and_text_widget.dart';
-import 'package:flutter_food_delivery/widgets/small_text.dart';
 import 'package:get/get.dart';
 
 class PopularFoodDetail extends StatelessWidget {
@@ -19,9 +18,8 @@ class PopularFoodDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var product =
-        Get.find<PopularProductController>().popularProductList[pageId];
-    Get.find<PopularProductController>().initProduct();
+    var product = Get.find<PopularProductController>().popularProductList[pageId];
+    Get.find<PopularProductController>().initProduct(product,Get.find<CartController>());
     //print("page id =" + pageId.toString());
     //print("product name =" + product.name.toString());
     return Scaffold(
@@ -143,10 +141,14 @@ class PopularFoodDetail extends StatelessWidget {
                       BigText(text: popularProduct.quantity.toString()),
                       SizedBox(width: Dimensions.width10 / 2),
                       GestureDetector(
-                          onTap: () {
-                            popularProduct.setQuantity(true);
-                          },
-                          child: Icon(Icons.add, color: AppColors.signColor))
+                          onTap: popularProduct.quantity >= 20
+                              ? null
+                              : () {
+                                  popularProduct.setQuantity(true);
+                                },
+                          child: popularProduct.quantity >= 20
+                              ? Icon(Icons.add, color: Colors.black12)
+                              : Icon(Icons.add, color: AppColors.signColor))
                     ],
                   ),
                 ),
@@ -158,11 +160,23 @@ class PopularFoodDetail extends StatelessWidget {
                       right: Dimensions.width20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(Dimensions.radius20),
-                      color: AppColors.mainColor),
-                  child: BigText(
-                      // text: "\$ ${product.price} | Sepete ekle",
-                      text: "${product.price!} ₺ | Sepete ekle",
-                      color: Colors.white),
+                      color: popularProduct.quantity <= 0
+                          ? Colors.grey
+                          : AppColors.mainColor),
+                  child: GestureDetector(
+                    onTap: popularProduct.quantity <= 0
+                        ? null
+                        : () {
+                            popularProduct.addItem(product);
+                          },
+                    child: BigText(
+
+                        // text: "\$ ${product.price} | Sepete ekle",
+                        text: "${product.price!} ₺ | Sepete ekle",
+                        color: popularProduct.quantity <= 0
+                            ? Colors.white54
+                            : Colors.white),
+                  ),
                 ),
               ],
             ),

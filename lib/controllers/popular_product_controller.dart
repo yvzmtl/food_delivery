@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/data/repository/popular_product_repo.dart';
 import 'package:flutter_food_delivery/models/products_model.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
@@ -11,6 +12,7 @@ class PopularProductController extends GetxController {
 
   List<ProductsModel> _popularProductList = [];
   List<ProductsModel> get popularProductList => _popularProductList;
+  late CartController _cart;
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
@@ -31,8 +33,8 @@ class PopularProductController extends GetxController {
         //çalıştırabilir. önceki ürünleri tekrar etmemesi için listeyi sıfırlıyoruz.
         _popularProductList = [];
         _popularProductList.addAll(Product.fromJson(response.body).products);
-        print(_popularProductList);
-        print(_popularProductList.map((e) => e.name));
+        // print(_popularProductList);
+        // print(_popularProductList.map((e) => e.name));
         _isLoaded = true;
         update();
       } else {
@@ -45,11 +47,11 @@ class PopularProductController extends GetxController {
 
   void setQuantity(bool isIncrement) {
     if (isIncrement) {
-      print("Miktar = " + _quantity.toString());
+      // print("Miktar = " + _quantity.toString());
       _quantity = _quantity + 1;
       // _quantity = checkQuantity(_quantity + 1);
     } else {
-      print("Miktar = " + _quantity.toString());
+      // print("Miktar = " + _quantity.toString());
       _quantity = _quantity - 1;
       // _quantity = checkQuantity(_quantity - 1);
     }
@@ -70,7 +72,25 @@ class PopularProductController extends GetxController {
     }
   }
 
-  void initProduct() {
+  void initProduct(ProductsModel product, CartController cart) {
     _quantity = 0;
+    _inCartItems = 0;
+    _cart = cart;
+    var exist = false;
+    exist = _cart.isExistInCart(product);
+    print( "var ya da yok "+exist.toString());
+  }
+
+  void addItem(ProductsModel product) {
+    if (quantity > 0) {
+      _cart.addCartItem(product, _quantity);
+      //_quantity=0;
+      _cart.items.forEach((key, value) {
+        print("İd = "+value.id.toString()+" miktarı = "+value.quantity.toString());
+       });
+    } else {
+      Get.snackbar("Ürün Adeti", "En az 1 ürün eklemelisiniz !",
+          backgroundColor: AppColors.mainColor, colorText: Colors.white);
+    }
   }
 }
