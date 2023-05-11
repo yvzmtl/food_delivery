@@ -55,7 +55,28 @@ class PopularFoodDetail extends StatelessWidget {
                         Get.to(() => MainFoodPage());
                       },
                       child: AppIcon(icon: Icons.arrow_back_ios)),
-                  AppIcon(icon: Icons.shopping_bag_outlined),
+                  GetBuilder<PopularProductController>(builder: (controller){
+                    return Stack(
+                      children: [
+                        AppIcon(icon: Icons.shopping_cart_outlined),
+                        Get.find<PopularProductController>().totalItems>=1?
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          child:AppIcon(icon: Icons.circle,size: 20,
+                          iconColor: Colors.transparent,
+                          backgroundColor: AppColors.mainColor), )
+                        :Container(),
+                        Get.find<PopularProductController>().totalItems>=1?
+                        Positioned(
+                          right: 5,
+                          top: 3,
+                          child: BigText(text: Get.find<PopularProductController>().totalItems.toString(),
+                          size: 12, color: Colors.white)
+                           ):Container()
+                      ],
+                    );
+                  })
                 ],
               ),
             ),
@@ -125,30 +146,38 @@ class PopularFoodDetail extends StatelessWidget {
                   child: Row(
                     children: [
                       GestureDetector(
-                          onTap: popularProduct.quantity <= 0
-                              ? null
-                              : () {
-                                  popularProduct.setQuantity(false);
-                                },
+                          // onTap: popularProduct.inCartItems+ popularProduct.quantity <= 0
+                          //     ? null
+                          //     : () {
+                          //         popularProduct.setQuantity(false);
+                          //       },
 
-                          // onTap: () {
-                          //   popularProduct.setQuantity(false);
-                          // },
-                          child: popularProduct.quantity <= 0
-                              ? Icon(Icons.remove, color: Colors.black12)
-                              : Icon(Icons.remove, color: AppColors.signColor)),
+                          onTap: () {
+                            popularProduct.setQuantity(false);
+                          },
+                          child: 
+                          popularProduct.inCartItems+popularProduct.quantity <= 0?
+                           Icon(Icons.remove, color: Colors.black12):
+                            Icon(Icons.remove, color: AppColors.signColor)
+                              ),
                       SizedBox(width: Dimensions.width10 / 2),
-                      BigText(text: popularProduct.quantity.toString()),
+                      // BigText(text: popularProduct.quantity.toString()),
+                      BigText(text: popularProduct.inCartItems.toString()),
                       SizedBox(width: Dimensions.width10 / 2),
                       GestureDetector(
-                          onTap: popularProduct.quantity >= 20
-                              ? null
-                              : () {
-                                  popularProduct.setQuantity(true);
-                                },
-                          child: popularProduct.quantity >= 20
-                              ? Icon(Icons.add, color: Colors.black12)
-                              : Icon(Icons.add, color: AppColors.signColor))
+                          // onTap: popularProduct.inCartItems+popularProduct.quantity >= 20
+                          //     ? null
+                          //     : () {
+                          //         popularProduct.setQuantity(true);
+                          //       },
+                                 onTap: () {
+                            popularProduct.setQuantity(true);
+                          },
+                          child:Icon(Icons.add, color: AppColors.signColor)
+                          //  popularProduct.inCartItems+popularProduct.quantity >= 20
+                          //     ? Icon(Icons.add, color: Colors.black12)
+                          //     : Icon(Icons.add, color: AppColors.signColor)
+                              )
                     ],
                   ),
                 ),
@@ -160,22 +189,25 @@ class PopularFoodDetail extends StatelessWidget {
                       right: Dimensions.width20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(Dimensions.radius20),
-                      color: popularProduct.quantity <= 0
-                          ? Colors.grey
-                          : AppColors.mainColor),
+                      color:
+                      // popularProduct.inCartItems+ popularProduct.quantity <= 0?
+                      //  Colors.grey: 
+                       AppColors.mainColor),
                   child: GestureDetector(
-                    onTap: popularProduct.quantity <= 0
-                        ? null
-                        : () {
+                    onTap:
+                    //  popularProduct.inCartItems+popularProduct.quantity <= 0? 
+                    // null: 
+                    () {
                             popularProduct.addItem(product);
                           },
                     child: BigText(
 
                         // text: "\$ ${product.price} | Sepete ekle",
                         text: "${product.price!} ₺ | Sepete ekle",
-                        color: popularProduct.quantity <= 0
-                            ? Colors.white54
-                            : Colors.white),
+                        color: 
+                        // popularProduct.inCartItems+popularProduct.quantity <= 0? 
+                        // Colors.white54:
+                         Colors.white),
                   ),
                 ),
               ],

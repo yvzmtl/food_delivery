@@ -47,23 +47,27 @@ class PopularProductController extends GetxController {
 
   void setQuantity(bool isIncrement) {
     if (isIncrement) {
-      // print("Miktar = " + _quantity.toString());
-      _quantity = _quantity + 1;
-      // _quantity = checkQuantity(_quantity + 1);
+      print("Miktar1+ = " + _quantity.toString());
+      print("Miktar1+ incart = " + _inCartItems.toString());
+      // _quantity = _quantity + 1;
+      _quantity = checkQuantity(_quantity + 1);
+      print("Miktar2+ = " + _quantity.toString());
     } else {
-      // print("Miktar = " + _quantity.toString());
-      _quantity = _quantity - 1;
-      // _quantity = checkQuantity(_quantity - 1);
+      print("Miktar3- = " + _quantity.toString());
+      print("Miktar3- incart = " + _inCartItems.toString());
+      // _quantity = _quantity - 1;
+      _quantity = checkQuantity(_quantity - 1);
+      print("Miktar4- = " + _quantity.toString());
     }
     update();
   }
 
   int checkQuantity(int quantity) {
-    if (quantity < 0) {
+    if (_inCartItems + quantity < 0) {
       Get.snackbar("Ürün Adeti", "Daha fazla azaltamazsınız !",
           backgroundColor: AppColors.mainColor, colorText: Colors.white);
       return 0;
-    } else if (quantity > 20) {
+    } else if (_inCartItems + quantity > 20) {
       Get.snackbar("Ürün Adeti", "Daha fazla ürün eklememezsiniz!",
           backgroundColor: AppColors.mainColor, colorText: Colors.white);
       return 20;
@@ -74,23 +78,30 @@ class PopularProductController extends GetxController {
 
   void initProduct(ProductsModel product, CartController cart) {
     _quantity = 0;
-    _inCartItems = 0;
+   _inCartItems = 0;
     _cart = cart;
     var exist = false;
     exist = _cart.isExistInCart(product);
     print( "var ya da yok "+exist.toString());
+    if (exist) {
+      _inCartItems = cart.getQuantity(product);
+    }
+    print("sepetteki ürün miktarı = " +_inCartItems.toString());
   }
 
   void addItem(ProductsModel product) {
-    if (quantity > 0) {
       _cart.addCartItem(product, _quantity);
-      //_quantity=0;
+     // _quantity=0;
+      _inCartItems = _cart.getQuantity(product);
       _cart.items.forEach((key, value) {
         print("İd = "+value.id.toString()+" miktarı = "+value.quantity.toString());
+        print("toplam miktarı = "+(_inCartItems+_quantity).toString());
        });
-    } else {
-      Get.snackbar("Ürün Adeti", "En az 1 ürün eklemelisiniz !",
-          backgroundColor: AppColors.mainColor, colorText: Colors.white);
-    }
+   
+    update();
+  }
+
+  int get totalItems{
+    return _cart.totalItems;
   }
 }
