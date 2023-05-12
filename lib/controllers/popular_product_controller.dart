@@ -48,16 +48,12 @@ class PopularProductController extends GetxController {
   void setQuantity(bool isIncrement) {
     if (isIncrement) {
       print("Miktar1+ = " + _quantity.toString());
-      print("Miktar1+ incart = " + _inCartItems.toString());
       // _quantity = _quantity + 1;
       _quantity = checkQuantity(_quantity + 1);
-      print("Miktar2+ = " + _quantity.toString());
     } else {
-      print("Miktar3- = " + _quantity.toString());
-      print("Miktar3- incart = " + _inCartItems.toString());
       // _quantity = _quantity - 1;
       _quantity = checkQuantity(_quantity - 1);
-      print("Miktar4- = " + _quantity.toString());
+      print("Miktar1- = " + _quantity.toString());
     }
     update();
   }
@@ -66,6 +62,10 @@ class PopularProductController extends GetxController {
     if (_inCartItems + quantity < 0) {
       Get.snackbar("Ürün Adeti", "Daha fazla azaltamazsınız !",
           backgroundColor: AppColors.mainColor, colorText: Colors.white);
+      if (_inCartItems>0) {
+            _quantity = -_inCartItems;
+            return _quantity;
+      }
       return 0;
     } else if (_inCartItems + quantity > 20) {
       Get.snackbar("Ürün Adeti", "Daha fazla ürün eklememezsiniz!",
@@ -82,7 +82,7 @@ class PopularProductController extends GetxController {
     _cart = cart;
     var exist = false;
     exist = _cart.isExistInCart(product);
-    print( "var ya da yok "+exist.toString());
+    // print( "var ya da yok "+exist.toString());
     if (exist) {
       _inCartItems = cart.getQuantity(product);
     }
@@ -91,11 +91,10 @@ class PopularProductController extends GetxController {
 
   void addItem(ProductsModel product) {
       _cart.addCartItem(product, _quantity);
-     // _quantity=0;
+      _quantity=0;
       _inCartItems = _cart.getQuantity(product);
       _cart.items.forEach((key, value) {
         print("İd = "+value.id.toString()+" miktarı = "+value.quantity.toString());
-        print("toplam miktarı = "+(_inCartItems+_quantity).toString());
        });
    
     update();

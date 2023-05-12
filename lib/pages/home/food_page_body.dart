@@ -183,9 +183,11 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                                       BigText(
                                           text: recommendedProductList.name!),
                                       SizedBox(height: Dimensions.height10),
-                                      SmallText(
-                                          text: recommendedProductList
-                                              .description!),
+                                      BigText(
+                                          text: recommendedProductList.description!,
+                                              size: 12,
+                                              color: Color(0xFFccc7c5),
+                                              ),
                                       SizedBox(height: Dimensions.height10),
                                       Row(
                                         mainAxisAlignment:
