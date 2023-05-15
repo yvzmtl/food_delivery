@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/pages/home/main_food_page.dart';
+import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/app_constants.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
@@ -38,7 +39,8 @@ class CartPage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => MainFoodPage());
+                  //Get.to(() => MainFoodPage());
+                  Get.toNamed(RouteHelper.getInitial());
                 },
                 child: AppIcon(
                     icon: Icons.home_outlined,
@@ -67,8 +69,9 @@ class CartPage extends StatelessWidget {
                   removeTop: true,
                   child: GetBuilder<CartController>(
                     builder: (cartController) {
+                      var _cartList = cartController.getItems;
                       return ListView.builder(
-                          itemCount: cartController.getItems.length,
+                          itemCount: _cartList.length,
                           itemBuilder: (_, index) {
                             return Container(
                                 height: Dimensions.height100,
@@ -107,8 +110,7 @@ class CartPage extends StatelessWidget {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           BigText(
-                                              text: cartController
-                                                  .getItems[index].name!,
+                                              text: _cartList[index].name!,
                                               color: Colors.black54),
                                           SmallText(text: "Spicy"),
                                           Row(
@@ -116,8 +118,7 @@ class CartPage extends StatelessWidget {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               BigText(
-                                                  text: cartController
-                                                          .getItems[index]
+                                                  text: _cartList[index]
                                                           .price!
                                                           .toString() +
                                                       " ₺",
@@ -138,7 +139,8 @@ class CartPage extends StatelessWidget {
                                                   children: [
                                                     GestureDetector(
                                                         onTap: () {
-                                                          // popularProduct.setQuantity(false);
+                                                          
+                                                          cartController.addCartItem(_cartList[index].product!, -1);
                                                         },
                                                         child:
                                                             // popularProduct.inCartItems <= 0 ?
@@ -152,8 +154,7 @@ class CartPage extends StatelessWidget {
                                                                 2),
                                                     // BigText(text: popularProduct.quantity.toString()),
                                                     BigText(
-                                                        text: cartController
-                                                            .getItems[index]
+                                                        text: _cartList[index]
                                                             .quantity
                                                             .toString()),
                                                     SizedBox(
@@ -162,7 +163,7 @@ class CartPage extends StatelessWidget {
                                                                 2),
                                                     GestureDetector(
                                                         onTap: () {
-                                                          // popularProduct.setQuantity(true);
+                                                          cartController.addCartItem(_cartList[index].product!, 1);
                                                         },
                                                         child:
                                                             //  popularProduct.inCartItems >= 20?
