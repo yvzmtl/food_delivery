@@ -42,7 +42,7 @@ class PopularProductController extends GetxController {
         print("Hata oluştu ve hata = " + response.body);
       }
     } catch (e) {
-      print("Controller da hata =  " + e.toString());
+      print(" popular product Controller da hata =  " + e.toString());
     }
   }
 

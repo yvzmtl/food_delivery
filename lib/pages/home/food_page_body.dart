@@ -132,7 +132,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                         recommendedProduct.recommendedProductList[index];
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(RouteHelper.getRecommendedFood(index));
+                        Get.toNamed(RouteHelper.getRecommendedFood(index,"home"));
                         // Get.to(() =>
                         //     RecommendedFoodDetail(recommendedProductList));
                       },
@@ -264,7 +264,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             onTap: () {
               // Get.to(() => PopularFoodDetail());
               // Get.toNamed(RouteHelper.popularFood);
-              Get.toNamed(RouteHelper.getPopularFood(position));
+              Get.toNamed(RouteHelper.getPopularFood(position,"home"));
             },
             child: Container(
               height: Dimensions.pageViewContainer,

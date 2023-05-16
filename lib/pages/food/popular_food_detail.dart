@@ -15,8 +15,9 @@ import 'package:flutter_food_delivery/widgets/food_info.dart';
 import 'package:get/get.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  int pageId;
-  PopularFoodDetail({super.key, required this.pageId});
+  final int pageId;
+  final String page;
+  PopularFoodDetail({super.key, required this.pageId,required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,12 @@ class PopularFoodDetail extends StatelessWidget {
                   GestureDetector(
                       onTap: () {
                         //Get.back();
-                        Get.to(() => MainFoodPage());
+                        // Get.to(() => MainFoodPage());
+                        if (page=="cartpage") {
+                          Get.toNamed(RouteHelper.getCartPage());
+                        } else {
+                          Get.toNamed(RouteHelper.getInitial());
+                        }
                       },
                       child: AppIcon(icon: Icons.arrow_back_ios)),
                   GetBuilder<PopularProductController>(builder: (controller) {
@@ -136,7 +142,7 @@ class PopularFoodDetail extends StatelessWidget {
           ],
         ),
         bottomNavigationBar:
-            GetBuilder<PopularProductController>(builder: (popularProduct) {
+          GetBuilder<PopularProductController>(builder: (popularProduct) {
           return Container(
             height: Dimensions.bottomHeight120,
             padding: EdgeInsets.only(
@@ -230,6 +236,8 @@ class PopularFoodDetail extends StatelessWidget {
               ],
             ),
           );
-        }));
+        },
+      ),
+    );
   }
 }
