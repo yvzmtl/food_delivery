@@ -10,13 +10,14 @@ class CartRepo {
   CartRepo({ required this.sharedPreferences});
 
   List<String> cart=[];
+  List<String> cartHistory=[];
 
   void addToCartList(List<CartModel> cartList){
+   
     cart = [];
     // nesneleri stringe dönüştürmek lazım çünkü sharedprefences sadece string kabul eder.
-    cartList.forEach((element) {
-      return cart.add(jsonEncode(element));
-     });
+    cartList.forEach((element) =>
+       cart.add(jsonEncode(element)));
 
      sharedPreferences.setStringList(AppConstants.CART_LIST, cart);
      getCartList();
@@ -30,9 +31,22 @@ class CartRepo {
       print("getCartList içeriği = "+carts.toString());
     }
     List<CartModel> cartList=[];
-    carts.forEach((element) {
-      CartModel.fromJson(jsonDecode(element));
-    });
+    carts.forEach((element) =>
+      cartList.add(CartModel.fromJson(jsonDecode(element))));
+       //print("cartlist uzunluğu ="+cartList.length.toString());
     return cartList;
+  }
+
+  void addToCartHistoryList(){
+    for (int i = 0; i < cart.length; i++) {
+      print("history list = "+cart[i]);
+      cartHistory.add(cart[i]);
+    }
+    removeCart();
+    sharedPreferences.setStringList(AppConstants.CART_HISTORY_LIST, cartHistory);
+  }
+  
+  void removeCart() {
+     sharedPreferences.remove(AppConstants.CART_LIST);
   }
 }

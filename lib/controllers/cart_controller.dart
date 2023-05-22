@@ -12,7 +12,9 @@ class CartController extends GetxController {
 
   Map<int, CartModel> _items = {};
   Map<int, CartModel> get items => _items;
-
+  
+  //sadece storage ve sharedpreferences için
+  List<CartModel> storageItems=[];
   void addCartItem(ProductsModel product, int quantity) {
     var totalQuantity = 0;
     if (_items.containsKey(product.id!)) {
@@ -67,8 +69,8 @@ class CartController extends GetxController {
 
   int getQuantity(ProductsModel product){
     var quantity = 0;
-    if (items.containsKey(product.id)) {
-      items.forEach((key, value) { 
+    if (_items.containsKey(product.id)) {
+      _items.forEach((key, value) { 
         if (key == product.id) {
           quantity = value.quantity!;
         }
@@ -101,5 +103,27 @@ class CartController extends GetxController {
     return total;
   }
 
+  List<CartModel> getCartData(){
+    setCart = cartRepo.getCartList();
+    return storageItems;
+  }
+  
+  set setCart(List<CartModel> items){
+    storageItems = items;
+    print("Cart items uzunluğu = "+storageItems.length.toString());
+    for (int i = 0; i < storageItems.length; i++) {
+      _items.putIfAbsent(storageItems[i].product!.id!, () => storageItems[i]);
+    }
+  }
+
+  void addToCartHistory(){
+    cartRepo.addToCartHistoryList();
+    clear();
+  }
+  
+  void clear() {
+    _items= {};
+    update();
+  }
 
 }

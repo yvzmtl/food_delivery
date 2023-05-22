@@ -48,13 +48,13 @@ class PopularProductController extends GetxController {
 
   void setQuantity(bool isIncrement) {
     if (isIncrement) {
-      print("Miktar1+ = " + _quantity.toString());
+      //print("Miktar1+ = " + _quantity.toString());
       // _quantity = _quantity + 1;
       _quantity = checkQuantity(_quantity + 1);
     } else {
       // _quantity = _quantity - 1;
       _quantity = checkQuantity(_quantity - 1);
-      print("Miktar1- = " + _quantity.toString());
+      //print("Miktar1- = " + _quantity.toString());
     }
     update();
   }
@@ -83,9 +83,9 @@ class PopularProductController extends GetxController {
     _cart = cart;
     var exist = false;
     exist = _cart.isExistInCart(product);
-    // print( "var ya da yok "+exist.toString());
+    //print( "var ya da yok = "+exist.toString());
     if (exist) {
-      _inCartItems = cart.getQuantity(product);
+      _inCartItems = _cart.getQuantity(product);
     }
     print("sepetteki ürün miktarı = " +_inCartItems.toString());
   }
@@ -95,7 +95,7 @@ class PopularProductController extends GetxController {
       _quantity=0;
       _inCartItems = _cart.getQuantity(product);
       _cart.items.forEach((key, value) {
-        print("İd = "+value.id.toString()+" miktarı = "+value.quantity.toString());
+        //print("İd = "+value.id.toString()+" miktarı = "+value.quantity.toString());
        });
    
     update();

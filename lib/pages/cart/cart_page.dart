@@ -256,6 +256,7 @@ class CartPage extends StatelessWidget {
                       null:
                       () {
                     // popularProduct.addItem(product);
+                    cartController.addToCartHistory();
                   },
                   child: Container(
                     padding: EdgeInsets.only(
