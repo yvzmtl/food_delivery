@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> init() async {
 
   //shared preferences
-  SharedPreferences.setMockInitialValues({});
+  //SharedPreferences.setMockInitialValues({});
   final sharedPreferences = await SharedPreferences.getInstance();
   Get.lazyPut(() => sharedPreferences);
 

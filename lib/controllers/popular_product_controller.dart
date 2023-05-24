@@ -95,7 +95,7 @@ class PopularProductController extends GetxController {
       _quantity=0;
       _inCartItems = _cart.getQuantity(product);
       _cart.items.forEach((key, value) {
-        //print("İd = "+value.id.toString()+" miktarı = "+value.quantity.toString());
+        print("İd = "+value.id.toString()+" miktarı = "+value.quantity.toString());
        });
    
     update();
