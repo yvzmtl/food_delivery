@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/pages/cart/cart_history.dart';
 import 'package:flutter_food_delivery/pages/cart/cart_page.dart';
 import 'package:flutter_food_delivery/pages/home/main_food_page.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
@@ -18,8 +19,8 @@ class _HomePageState extends State<HomePage> {
   //late PersistentTabController _controller;
   List pages = [
     MainFoodPage(),
+    CartHistory(),
     CartPage(),
-    Container(child: Center(child: Text("2. sayfa"),),),
     Container(child: Center(child: Text("3. sayfa"),),),
   ];
 

@@ -25,7 +25,7 @@ class CartRepo {
     });
 
      sharedPreferences.setStringList(AppConstants.CART_LIST, cart);
-     getCartList();
+     //getCartList();
      //print(sharedPreferences.getStringList(AppConstants.CART_LIST));
   }
 
@@ -64,7 +64,7 @@ class CartRepo {
     sharedPreferences.setStringList(AppConstants.CART_HISTORY_LIST, cartHistory);
     print("History cart uzunluğu = "+getCartHistoryList().length.toString());
     for (int j = 0; j < getCartHistoryList().length; j++) {
-       print("Sipariş zamanı = "+getCartHistoryList()[0].time.toString());
+       print("Sipariş zamanı = "+getCartHistoryList()[j].time.toString());
     }
   }
   
