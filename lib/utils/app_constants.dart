@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class AppConstants {
   static const String APP_NAME = "DBFood";
   static const int APP_VERSION = 1;
@@ -11,4 +13,14 @@ class AppConstants {
 
   static const String CART_LIST = "cart-list";
   static const String CART_HISTORY_LIST = "cart-history-list";
+
+
+  static String datetimeFormat(String date){
+    DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+    var inputDate = DateTime.parse(parseDate.toString());
+    var outputFormat = DateFormat("dd-MM-yyyy hh:mm");
+    var outputDate = outputFormat.format(inputDate);
+    return outputDate;
+    
+  }
 }

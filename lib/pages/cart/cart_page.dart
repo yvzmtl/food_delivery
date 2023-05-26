@@ -84,23 +84,18 @@ class CartPage extends StatelessWidget {
                                       onTap: () {
                                         var popularIndex =
                                             Get.find<PopularProductController>()
-                                                .popularProductList
-                                                .indexOf(
-                                                    _cartList[index].product!);
+                                                .popularProductList.indexOf(_cartList[index].product!);
                                         if (popularIndex >= 0) {
-                                          Get.toNamed(
-                                              RouteHelper.getPopularFood(
-                                                  popularIndex, "cartpage"));
+                                          Get.toNamed(RouteHelper.getPopularFood(popularIndex, "cartpage"));
                                         } else {
-                                          var recommendedIndex = Get.find<
-                                                  RecommendedProductController>()
-                                              .recommendedProductList
-                                              .indexOf(
-                                                  _cartList[index].product!);
-                                          Get.toNamed(
-                                              RouteHelper.getRecommendedFood(
-                                                  recommendedIndex,
-                                                  "cartpage"));
+                                          var recommendedIndex = Get.find<RecommendedProductController>()
+                                              .recommendedProductList.indexOf(_cartList[index].product!);
+                                          if (recommendedIndex<0) {
+                                            Get.snackbar("Ürün Geçmişi", "Geçmiş ürünlerde ürün incelemesi mümkün değil!",
+                                              backgroundColor: AppColors.mainColor, colorText: Colors.white);
+                                          } else {
+                                            Get.toNamed(RouteHelper.getRecommendedFood(recommendedIndex,"cartpage"));
+                                          }
                                         }
                                       },
                                       child: Container(
@@ -115,12 +110,9 @@ class CartPage extends StatelessWidget {
                                               image: NetworkImage(
                                                   AppConstants.BASE_URL +
                                                       AppConstants.UPLOAD_URL +
-                                                      cartController
-                                                          .getItems[index]
-                                                          .img!),
+                                                      cartController.getItems[index].img!),
                                             ),
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions.radius20),
+                                            borderRadius: BorderRadius.circular(Dimensions.radius20),
                                             color: Colors.white),
                                       ),
                                     ),
@@ -130,24 +122,18 @@ class CartPage extends StatelessWidget {
                                       // color: Colors.amber,
                                       height: Dimensions.height100,
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:CrossAxisAlignment.start,
+                                        mainAxisAlignment:MainAxisAlignment.spaceEvenly,
                                         children: [
                                           BigText(
                                               text: _cartList[index].name!,
                                               color: Colors.black54),
                                           SmallText(text: "Spicy"),
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                             children: [
                                               BigText(
-                                                  text: _cartList[index]
-                                                          .price!
-                                                          .toString() +
-                                                      " ₺",
+                                                  text: _cartList[index].price!.toString() +" ₺",
                                                   color: Colors.redAccent),
                                               Container(
                                                 padding: EdgeInsets.only(
@@ -157,36 +143,25 @@ class CartPage extends StatelessWidget {
                                                     right: Dimensions.width10),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            Dimensions
-                                                                .radius20),
+                                                        BorderRadius.circular(Dimensions.radius20),
                                                     color: Colors.white),
                                                 child: Row(
                                                   children: [
                                                     GestureDetector(
                                                         onTap: () {
-                                                          
                                                           cartController.addCartItem(_cartList[index].product!, -1);
                                                         },
                                                         child:
                                                             // popularProduct.inCartItems <= 0 ?
                                                             //  Icon(Icons.remove, color: Colors.black12):
                                                             Icon(Icons.remove,
-                                                                color: AppColors
-                                                                    .signColor)),
+                                                                color: AppColors.signColor)),
                                                     SizedBox(
                                                         width:
-                                                            Dimensions.width10 /
-                                                                2),
+                                                            Dimensions.width10 /2),
                                                     // BigText(text: popularProduct.quantity.toString()),
-                                                    BigText(
-                                                        text: _cartList[index]
-                                                            .quantity
-                                                            .toString()),
-                                                    SizedBox(
-                                                        width:
-                                                            Dimensions.width10 /
-                                                                2),
+                                                    BigText(text: _cartList[index].quantity.toString()),
+                                                    SizedBox(width:Dimensions.width10 /2),
                                                     GestureDetector(
                                                         onTap: () {
                                                           cartController.addCartItem(_cartList[index].product!, 1);
@@ -195,8 +170,7 @@ class CartPage extends StatelessWidget {
                                                             //  popularProduct.inCartItems >= 20?
                                                             //   Icon(Icons.add, color: Colors.black12):
                                                             Icon(Icons.add,
-                                                                color: AppColors
-                                                                    .signColor)),
+                                                                color: AppColors.signColor)),
                                                   ],
                                                 ),
                                               ),

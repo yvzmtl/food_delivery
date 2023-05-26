@@ -75,4 +75,7 @@ class Dimensions {
 
   //splash-screen
    static double splashImg250 = screenHeight / 3.12;
+
+
+   
 }
