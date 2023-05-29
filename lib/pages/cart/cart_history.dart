@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/base/no_data_page.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/models/cart_model.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
@@ -41,6 +42,13 @@ class CartHistory extends StatelessWidget {
     List<int> itemsPerOrder = cartItemsPerOrderToList(); //3 , 2 , 4...
 
     var listCounter = 0;
+    Widget timeWidget(int index){
+      var outputDate = DateTime.now().toString();
+      if(index < getCartHistoryList.length){
+        var outputDate =AppConstants.datetimeFormat(getCartHistoryList[listCounter].time!);
+      }
+      return BigText(text:outputDate);
+    }
 
     return Scaffold(
       body: Column(children: [
@@ -61,8 +69,10 @@ class CartHistory extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(
-            child: Container(
+        GetBuilder<CartController>(builder: (_cartController){
+          return _cartController.getCartHistoryList().length > 0 ?
+          Expanded(
+          child: Container(
           // color: Colors.blueAccent,
           margin: EdgeInsets.only(
               top: Dimensions.height20,
@@ -80,8 +90,8 @@ class CartHistory extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // BigText(text: getCartHistoryList[listCounter].time!),
-                        BigText(text: AppConstants.datetimeFormat(getCartHistoryList[listCounter].time!)),
+                        // BigText(text: AppConstants.datetimeFormat(getCartHistoryList[listCounter].time!)),
+                        timeWidget(listCounter),
                         SizedBox(height: Dimensions.height10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,7 +169,13 @@ class CartHistory extends StatelessWidget {
               ],
             ),
           ),
-        )),
+          ),
+          ): 
+          SizedBox(
+            height: MediaQuery.of(context).size.height/1.5,
+            child: const Center(
+              child: NoDataPage(text: "Hiç Siparişiniz Yok",imgPath: "assets/image/empty_cart_history.png")));
+        }),
       ]),
     );
   }
