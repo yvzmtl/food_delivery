@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
+import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
 import 'package:flutter_food_delivery/pages/home/food_page_body.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:flutter_food_delivery/widgets/big_text.dart';
 import 'package:flutter_food_delivery/widgets/small_text.dart';
+import 'package:get/get.dart';
 
 class MainFoodPage extends StatefulWidget {
   const MainFoodPage({super.key});
@@ -12,14 +15,19 @@ class MainFoodPage extends StatefulWidget {
   State<MainFoodPage> createState() => _MainFoodPageState();
 }
 
+Future<void> _loadResource() async {
+    await Get.find<PopularProductController>().getPopularProductList();
+    await Get.find<RecommendedProductController>().getRecommendedProductList();
+   }
+
 class _MainFoodPageState extends State<MainFoodPage> {
   @override
   Widget build(BuildContext context) {
     // print(
     //     "Mevcut yükseklik = " + MediaQuery.of(context).size.height.toString());
     // print("Mevcut genişlik = " + MediaQuery.of(context).size.width.toString());
-    return Scaffold(
-        body: Column(
+    return RefreshIndicator(child:
+    Column(
       children: [
         //header
         Container(
@@ -74,6 +82,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
           ),
         ),
       ],
-    ));
+    ), 
+    onRefresh: _loadResource);
   }
 }

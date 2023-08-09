@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
 import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
+import 'package:flutter_food_delivery/pages/auth/sign_in_page.dart';
+import 'package:flutter_food_delivery/pages/auth/sign_up_page.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:get/get.dart';
 import 'helper/dependencies.dart' as dep;
@@ -21,11 +23,12 @@ class MyApp extends StatelessWidget {
     Get.find<CartController>().getCartData();
     return GetBuilder<PopularProductController>(builder: (_) {
       return GetBuilder<RecommendedProductController>(builder: (_) {
-        return GetMaterialApp(
+        return const GetMaterialApp(
         debugShowCheckedModeBanner: false,
+        home: SignInPage(),
           // home: SplashScreen(),
-          initialRoute: RouteHelper.getSplashPage(),
-        getPages: RouteHelper.routes,
+        // initialRoute: RouteHelper.getSplashPage(),
+        // getPages: RouteHelper.routes,
         );
       });
     });
