@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/pages/account/account_page.dart';
 import 'package:flutter_food_delivery/pages/cart/cart_history.dart';
 import 'package:flutter_food_delivery/pages/cart/cart_page.dart';
 import 'package:flutter_food_delivery/pages/home/main_food_page.dart';
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     MainFoodPage(),
     CartHistory(),
     CartPage(),
-    Container(child: Center(child: Text("3. sayfa"),),),
+    Accountpage()
   ];
 
   void onTapNav(int index) {
