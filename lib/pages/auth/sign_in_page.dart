@@ -56,6 +56,7 @@ class SignInPage extends StatelessWidget {
             //Email
             AppTextWidget(
                 textController: emailController,
+                textinputtype: TextInputType.emailAddress,
                 hintText: "Email",
                 icon: Icons.email),
             SizedBox(height: Dimensions.height20),
@@ -63,6 +64,7 @@ class SignInPage extends StatelessWidget {
             //Password
             AppTextWidget(
                 textController: passwordController,
+                textinputtype: TextInputType.visiblePassword,
                 hintText: "Şifre",
                 icon: Icons.password),
             SizedBox(height: Dimensions.height20),

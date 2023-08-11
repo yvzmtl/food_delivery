@@ -8,7 +8,8 @@ class AppTextWidget extends StatelessWidget {
   final TextEditingController textController;
   final String hintText;
   final IconData icon;
-  const AppTextWidget({super.key, required this.textController, required this.hintText, required this.icon});
+  final TextInputType textinputtype;
+  const AppTextWidget({super.key, required this.textController, required this.hintText, required this.icon, required this.textinputtype});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class AppTextWidget extends StatelessWidget {
             ),
             child: TextField(
               controller: textController,
+              keyboardType: textinputtype,
               decoration: InputDecoration(
                 hintText: hintText,
                 prefixIcon: Icon(icon, color: AppColors.yellowColor),
