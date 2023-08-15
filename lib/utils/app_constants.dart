@@ -13,6 +13,9 @@ class AppConstants {
   // static const DRINKS_PRODUCT_URI = "/api/v1/products/drinks";
   static const UPLOAD_URL = "/uploads/";
 
+  //auth
+  static const String REGISTRATION_URI = "/api/v1/auth/register";
+
   static const String TOKEN = "DBToken";
 
   static const String CART_LIST = "cart-list";
