@@ -4,9 +4,9 @@ class AppConstants {
   static const String APP_NAME = "DBFood";
   static const int APP_VERSION = 1;
 
-  static const BASE_URL = "http://mvs.bslmeiyu.com";
+  // static const BASE_URL = "http://mvs.bslmeiyu.com";
   // static const BASE_URL = "http://127.0.0.1:8000";
-  // static const BASE_URL = "http://10.0.2.2:8000";
+  static const BASE_URL = "http://10.0.2.2:8000";
   // static const BASE_URL = "http://10.34.161.64:8000";
   static const POPULAR_PRODUCT_URI = "/api/v1/products/popular";
   static const RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";

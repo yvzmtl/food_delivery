@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/base/show_custom_snackbar.dart';
+import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/models/signup_model.dart';
 import 'package:flutter_food_delivery/pages/auth/sign_in_page.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
@@ -23,6 +24,7 @@ class SignUpPage extends StatelessWidget {
 
 
      void _registration(){
+      var authController = Get.find<AuthController>();
       String email = emailController.text.trim();
       String password = passwordController.text.trim();
       String repeatpassword = repeatpasswordController.text.trim();
@@ -50,13 +52,19 @@ class SignUpPage extends StatelessWidget {
       //   showCustomSnackbar("Telefon numarası eksik veya hatalı girildi ",title: "Uyarı");
       // }
       else{
-        showCustomSnackbar("Kayıt Başarılı",title: "Uyarı");
+        // showCustomSnackbar("Kayıt Başarılı",title: "Uyarı");
         SignUpModel signUpModel = SignUpModel(name: name, 
           phone: phone, 
           email: email, 
           password: password);
-        print(signUpModel.name.toString());
-
+        authController.registration(signUpModel).then((status){
+          if (status.isSuccess) {
+            print("kayıt başarılı");
+          }
+          else{
+            showCustomSnackbar(status.message);
+          }
+        });
       }
     }
 
