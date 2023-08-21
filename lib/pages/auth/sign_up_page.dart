@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/base/custom_loader.dart';
 import 'package:flutter_food_delivery/base/show_custom_snackbar.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/models/signup_model.dart';
@@ -23,8 +24,7 @@ class SignUpPage extends StatelessWidget {
     var signUpImages = ["twitter2.png", "facebook.png", "google.png"];
 
 
-     void _registration(){
-      var authController = Get.find<AuthController>();
+     void _registration(AuthController authController){
       String email = emailController.text.trim();
       String password = passwordController.text.trim();
       String repeatpassword = repeatpasswordController.text.trim();
@@ -41,9 +41,7 @@ class SignUpPage extends StatelessWidget {
         showCustomSnackbar("Uygun bir email değil",title: "Uyarı");
       }else if(password.isEmpty){
         showCustomSnackbar("Şifre alanı boş olamaz",title: "Uyarı");
-      }
-     
-      else if(password != repeatpassword){
+      }else if(password != repeatpassword){
         showCustomSnackbar("Şifreler eşleşmiyor",title: "Uyarı");
       }else if(password.length < 6){
         showCustomSnackbar("Şifre 6 karakterden küçük olamaz",title: "Uyarı");
@@ -71,7 +69,8 @@ class SignUpPage extends StatelessWidget {
      
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+        body: GetBuilder<AuthController>(builder: (_authController) {
+          return !_authController.isLoading? SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
@@ -101,7 +100,8 @@ class SignUpPage extends StatelessWidget {
                 textController: passwordController,
                 textinputtype: TextInputType.visiblePassword,
                 hintText: "Şifre",
-                icon: Icons.password),
+                icon: Icons.password,
+                isObsurce: true),
             SizedBox(height: Dimensions.height10*1.5),
 
              //Repeat Password
@@ -109,7 +109,8 @@ class SignUpPage extends StatelessWidget {
                 textController: repeatpasswordController,
                 textinputtype: TextInputType.visiblePassword,
                 hintText: "Şifre Tekrar",
-                icon: Icons.password),
+                icon: Icons.password,
+                isObsurce: true),
             SizedBox(height: Dimensions.height10*1.5),
 
             //Name
@@ -130,7 +131,7 @@ class SignUpPage extends StatelessWidget {
 
             GestureDetector(
              onTap: () {
-               _registration();
+               _registration(_authController);
              },
               child: Container(
                 width: Dimensions.screenWidth / 2,
@@ -193,7 +194,8 @@ class SignUpPage extends StatelessWidget {
             ))
           ],
         ),
-      ),
+          ):CustomLoader();
+        })
     );
  
    

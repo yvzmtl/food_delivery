@@ -9,7 +9,9 @@ class AppTextWidget extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final TextInputType textinputtype;
-  const AppTextWidget({super.key, required this.textController, required this.hintText, required this.icon, required this.textinputtype});
+  bool isObsurce;
+   AppTextWidget({super.key, required this.textController, required this.hintText, 
+        required this.icon, required this.textinputtype,this.isObsurce=false});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class AppTextWidget extends StatelessWidget {
               ]
             ),
             child: TextField(
+              obscureText: isObsurce?true:false,
               controller: textController,
               keyboardType: textinputtype,
               decoration: InputDecoration(

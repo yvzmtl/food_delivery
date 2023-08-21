@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/base/show_custom_snackbar.dart';
+import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/pages/auth/sign_up_page.dart';
+import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:flutter_food_delivery/widgets/app_text_field.dart';
@@ -15,12 +18,38 @@ class SignInPage extends StatelessWidget {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
 
+    void _login(AuthController authController) {
+      String email = emailController.text.trim();
+      String password = passwordController.text.trim();
+
+      if (email.isEmpty) {
+        showCustomSnackbar("Ad soyad alanı boş olamaz", title: "Uyarı");
+      } else if (password.isEmpty) {
+        showCustomSnackbar("Şifre alanı boş olamaz", title: "Uyarı");
+      } else if (password.length < 6) {
+        showCustomSnackbar("Şifre 6 karakterden küçük olamaz", title: "Uyarı");
+      } else {
+        // showCustomSnackbar("Kayıt Başarılı",title: "Uyarı");
+
+        authController.login(email, password).then((status) {
+          if (status.isSuccess) {
+            Get.toNamed(RouteHelper.getInitial());
+          } else {
+            showCustomSnackbar(status.message);
+            print("hata mesajı : "+status.message);
+     
+          }
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
+        body: GetBuilder<AuthController>(builder: (authController) {
+          return SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
             SizedBox(height: Dimensions.screenHeight * 0.05),
 
             // app logo
@@ -66,7 +95,8 @@ class SignInPage extends StatelessWidget {
                 textController: passwordController,
                 textinputtype: TextInputType.visiblePassword,
                 hintText: "Şifre",
-                icon: Icons.password),
+                    icon: Icons.password,
+                    isObsurce: true),
             SizedBox(height: Dimensions.height20),
 
             //Hesabınıza giriş yapın
@@ -88,17 +118,22 @@ class SignInPage extends StatelessWidget {
 
             SizedBox(height: Dimensions.height10 * 6),
 
-            Container(
-              width: Dimensions.screenWidth / 2,
-              height: Dimensions.screenHeight / 13,
-              decoration: BoxDecoration(
-                  color: AppColors.mainColor,
-                  borderRadius: BorderRadius.circular(Dimensions.radius30)),
-              child: Center(
-                child: BigText(
-                  text: "Giriş",
-                  size: Dimensions.fontSize20 * 1.5,
-                  color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                _login(authController);
+              },
+              child: Container(
+                width: Dimensions.screenWidth / 2,
+                height: Dimensions.screenHeight / 13,
+                decoration: BoxDecoration(
+                    color: AppColors.mainColor,
+                    borderRadius: BorderRadius.circular(Dimensions.radius30)),
+                child: Center(
+                  child: BigText(
+                    text: "Giriş",
+                    size: Dimensions.fontSize20 * 1.5,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -123,7 +158,8 @@ class SignInPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
+          );
+        })
     );
   }
 }
