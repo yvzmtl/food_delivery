@@ -7,8 +7,8 @@ import 'package:flutter_food_delivery/widgets/account_widget.dart';
 import 'package:flutter_food_delivery/widgets/app_icon.dart';
 import 'package:flutter_food_delivery/widgets/big_text.dart';
 
-class Accountpage extends StatelessWidget {
-  const Accountpage({super.key});
+class AccountPage extends StatelessWidget {
+  const AccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {

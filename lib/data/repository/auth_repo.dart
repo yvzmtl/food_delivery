@@ -23,6 +23,11 @@ class AuthRepo{
     return await sharedPreferences.getString(AppConstants.TOKEN)??"None";
    }
 
+  //kullanıcı login mi değil mi
+   bool userLoggedIn(){
+    return  sharedPreferences.containsKey(AppConstants.TOKEN);
+   }
+
     Future<bool> saveUserToken(String token) async {
     apiClient.token = token;
     apiClient.updateHeader(token);

@@ -4,6 +4,9 @@ import 'package:flutter_food_delivery/controllers/popular_product_controller.dar
 import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
 import 'package:flutter_food_delivery/pages/auth/sign_in_page.dart';
 import 'package:flutter_food_delivery/pages/auth/sign_up_page.dart';
+import 'package:flutter_food_delivery/pages/home/food_page_body.dart';
+import 'package:flutter_food_delivery/pages/home/main_food_page.dart';
+import 'package:flutter_food_delivery/pages/splash/splash_page.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:get/get.dart';
 import 'helper/dependencies.dart' as dep;
@@ -23,12 +26,11 @@ class MyApp extends StatelessWidget {
     Get.find<CartController>().getCartData();
     return GetBuilder<PopularProductController>(builder: (_) {
       return GetBuilder<RecommendedProductController>(builder: (_) {
-        return const GetMaterialApp(
+        return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SignUpPage(),
-          // home: SplashScreen(),
-        // initialRoute: RouteHelper.getSplashPage(),
-        // getPages: RouteHelper.routes,
+        // home: SignUpPage(),
+         initialRoute: RouteHelper.getSplashPage(),
+         getPages: RouteHelper.routes,
         );
       });
     });

@@ -38,7 +38,7 @@ class ApiClient extends GetConnect implements GetxService {
     print(body.toString());
     try {
       Response response = await post(uri, body,headers: _mainHeaders);
-       print(body.toString());
+       print(" api client body string = "+body.toString());
       return response;
     } catch (e) {
       print("Api clientten gelen hata " + e.toString());
