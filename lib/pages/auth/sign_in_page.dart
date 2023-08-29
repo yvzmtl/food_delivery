@@ -24,7 +24,7 @@ class SignInPage extends StatelessWidget {
       String password = passwordController.text.trim();
 
       if (email.isEmpty) {
-        showCustomSnackbar("Ad soyad alanı boş olamaz", title: "Uyarı");
+        showCustomSnackbar("Email alanı boş olamaz", title: "Uyarı");
       } else if (password.isEmpty) {
         showCustomSnackbar("Şifre alanı boş olamaz", title: "Uyarı");
       } else if (password.length < 6) {

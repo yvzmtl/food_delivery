@@ -34,12 +34,21 @@ class AuthRepo{
     return await sharedPreferences.setString(AppConstants.TOKEN, token);
    }
 
-   Future<void> saveUserPhoneAndPassword(String phone,String password) async {
+   Future<void> saveUserEmailAndPassword(String email,String password) async {
     try {
-      await sharedPreferences.setString(AppConstants.PHONE, phone);
+      await sharedPreferences.setString(AppConstants.EMAIL, email);
       await sharedPreferences.setString(AppConstants.PASSWORD, password);
     } catch (e) {
       throw e;
     }
+   }
+
+   bool clearSharedData(){
+    sharedPreferences.remove(AppConstants.TOKEN);
+    sharedPreferences.remove(AppConstants.EMAIL);
+    sharedPreferences.remove(AppConstants.PASSWORD);
+    apiClient.token = "";
+    apiClient.updateHeader("");
+    return true;
    }
 }

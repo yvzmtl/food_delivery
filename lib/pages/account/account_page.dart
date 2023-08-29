@@ -1,11 +1,15 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/controllers/auth_controller.dart';
+import 'package:flutter_food_delivery/controllers/cart_controller.dart';
+import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:flutter_food_delivery/widgets/account_widget.dart';
 import 'package:flutter_food_delivery/widgets/app_icon.dart';
 import 'package:flutter_food_delivery/widgets/big_text.dart';
+import 'package:get/get.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -74,7 +78,7 @@ class AccountPage extends StatelessWidget {
                 iconColor: Colors.white,
                 iconSize: Dimensions.height10*5/2,
                 size: Dimensions.height10*5),
-                bigText: BigText(text: "İStanbul")),
+                bigText: BigText(text: "İstanbul")),
               
                 SizedBox(height: Dimensions.height20),
               
@@ -88,13 +92,26 @@ class AccountPage extends StatelessWidget {
 
                 SizedBox(height: Dimensions.height20),
               
-                //message
-                AccountWidget(appIcon: AppIcon(icon: Icons.message_outlined,
-                backgroundColor: Color.fromARGB(255, 9, 182, 220),
-                iconColor: Colors.white,
-                iconSize: Dimensions.height10*5/2,
-                size: Dimensions.height10*5),
-                bigText: BigText(text: "Mesajlar")),
+                //logout
+                GestureDetector(
+                  onTap: () {
+                    if (Get.find<AuthController>().userLoggedIn()) {
+                      Get.find<AuthController>().clearSharedData();
+                      Get.find<CartController>().clear();
+                      Get.find<CartController>().clearCartHistory();
+                      // Get.toNamed(RouteHelper.getInitial());
+                      Get.toNamed(RouteHelper.getSignInPage());
+                    }else{
+                      print("Zaten çıkış yapılmış");
+                    }
+                  },
+                  child: AccountWidget(appIcon: AppIcon(icon: Icons.logout,
+                  backgroundColor: Colors.redAccent,
+                  iconColor: Colors.white,
+                  iconSize: Dimensions.height10*5/2,
+                  size: Dimensions.height10*5),
+                  bigText: BigText(text: "Çıkış")),
+                ),
             
                 
                   ],
