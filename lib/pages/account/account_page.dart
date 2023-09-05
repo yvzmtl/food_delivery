@@ -1,8 +1,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/base/custom_loader.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
+import 'package:flutter_food_delivery/controllers/user_controller.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
@@ -16,14 +18,23 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    bool _userLoggenIn = Get.find<AuthController>().userLoggedIn();
+    if (_userLoggenIn) {
+      Get.find<UserController>().getUserInfo();
+      print("account page =  Kullanıcı giriş yapmış");
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
-        
         title: Center(child: BigText(text: "Profil",size: 24,color: Colors.white),),
-       
-      ),
-      body: Container(
+        ),
+        
+        body: GetBuilder<UserController>(
+          builder: (userController) {
+            return _userLoggenIn ? 
+            (userController.isLoading? Container(
         width: double.maxFinite,
         margin: EdgeInsets.only(top: Dimensions.height20),
         child: Column(
@@ -42,13 +53,14 @@ class AccountPage extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                                //name
+                
+                //name
                 AccountWidget(appIcon: AppIcon(icon: Icons.person,
                 backgroundColor: AppColors.mainColor,
                 iconColor: Colors.white,
                 iconSize: Dimensions.height10*5/2,
                 size: Dimensions.height10*5),
-                bigText: BigText(text: "Yavuz")),
+                bigText: BigText(text: userController.userModel.name)),
               
                 SizedBox(height: Dimensions.height20),
               
@@ -58,7 +70,7 @@ class AccountPage extends StatelessWidget {
                 iconColor: Colors.white,
                 iconSize: Dimensions.height10*5/2,
                 size: Dimensions.height10*5),
-                bigText: BigText(text: "5051234567")),
+                bigText: BigText(text: userController.userModel.phone)),
               
                 SizedBox(height: Dimensions.height20),
               
@@ -68,7 +80,7 @@ class AccountPage extends StatelessWidget {
                 iconColor: Colors.white,
                 iconSize: Dimensions.height10*5/2,
                 size: Dimensions.height10*5),
-                bigText: BigText(text: "yavuz@gmail.com")),
+                bigText: BigText(text: userController.userModel.email)),
               
                 SizedBox(height: Dimensions.height20),
               
@@ -112,17 +124,51 @@ class AccountPage extends StatelessWidget {
                   size: Dimensions.height10*5),
                   bigText: BigText(text: "Çıkış")),
                 ),
-            
-                
                   ],
                 ),
               ),
             )
-     
-            
           ],
         ),
-      ),
+      )
+            :CustomLoader()): 
+            Container(
+              child:Center(child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+              width: double.maxFinite,
+              height: Dimensions.height100*2.5,
+              margin: EdgeInsets.only(left: Dimensions.width20,right: Dimensions.width20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dimensions.radius20),
+                image: const DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage("assets/image/login.png",) )
+              ),
+            ),
+            SizedBox(height: Dimensions.height10),
+             GestureDetector(
+              onTap: () {
+                Get.toNamed(RouteHelper.getSignInPage());
+              },
+               child: Container(
+                width: double.maxFinite,
+                height: Dimensions.height100,
+                margin: EdgeInsets.only(left: Dimensions.width20,right: Dimensions.width20),
+                decoration: BoxDecoration(
+                  color: AppColors.mainColor,
+                  borderRadius: BorderRadius.circular(Dimensions.radius20),
+                ),
+                child: Center(
+                  child: BigText(text: "Giriş Yap",color: Colors.white,size: Dimensions.fontSize26,)),
+                         ),
+             ),
+                ],
+              )
+            ));
+          },
+        )
     );
   }
 }

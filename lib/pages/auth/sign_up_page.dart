@@ -5,6 +5,7 @@ import 'package:flutter_food_delivery/base/show_custom_snackbar.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/models/signup_model.dart';
 import 'package:flutter_food_delivery/pages/auth/sign_in_page.dart';
+import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:flutter_food_delivery/widgets/app_text_field.dart';
@@ -57,7 +58,8 @@ class SignUpPage extends StatelessWidget {
           password: password);
         authController.registration(signUpModel).then((status){
           if (status.isSuccess) {
-            print("kayıt başarılı");
+            print("sign up page = kayıt başarılı");
+            Get.offNamed(RouteHelper.getInitial());
           }
           else{
             showCustomSnackbar(status.message);
