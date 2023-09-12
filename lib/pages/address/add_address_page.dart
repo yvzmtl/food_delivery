@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/controllers/location_controller.dart';
 import 'package:flutter_food_delivery/controllers/user_controller.dart';
+import 'package:flutter_food_delivery/utils/colors.dart';
+import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -47,6 +49,26 @@ class _AddAddressPageState extends State<AddAddressPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Adres Ekle",),
+        backgroundColor: AppColors.mainColor,
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: Dimensions.height10*14,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(Dimensions.radius5),
+              border: Border.all(
+                width: 2,
+                color: Theme.of(context).primaryColor
+              )
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
