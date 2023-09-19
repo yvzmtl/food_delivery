@@ -24,7 +24,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
   CameraPosition _cameraPosition = const CameraPosition(target: LatLng(
     41.0082, 28.9784), 
     zoom: 17);
-    late LatLng _initialPosition;
+
+  late LatLng _initialPosition = LatLng(41.0082, 28.9784);
 
     @override
   void initState() {
@@ -59,12 +60,18 @@ class _AddAddressPageState extends State<AddAddressPage> {
           Container(
             height: Dimensions.height10*14,
             width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(top: Dimensions.height10/2,left: Dimensions.width5,right: Dimensions.width5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Dimensions.radius5),
               border: Border.all(
                 width: 2,
                 color: Theme.of(context).primaryColor
               )
+            ),
+            child: Stack(
+              children: [
+                GoogleMap(initialCameraPosition:CameraPosition(target: _initialPosition,zoom: 17) )
+              ],
             ),
           )
         ],
