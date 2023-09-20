@@ -8,11 +8,11 @@ class UserController extends GetxController implements GetxService{
 
   UserController({required this.userRepo});
 
-  late UserModel _userModel;
+  UserModel? _userModel;
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
-  UserModel get userModel => _userModel;
+  UserModel? get userModel => _userModel;
 
   Future<ResponseModel> getUserInfo() async{
 

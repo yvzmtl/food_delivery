@@ -60,7 +60,7 @@ class AccountPage extends StatelessWidget {
                 iconColor: Colors.white,
                 iconSize: Dimensions.height10*5/2,
                 size: Dimensions.height10*5),
-                bigText: BigText(text: userController.userModel.name)),
+                bigText: BigText(text: userController.userModel!.name)),
               
                 SizedBox(height: Dimensions.height20),
               
@@ -70,7 +70,7 @@ class AccountPage extends StatelessWidget {
                 iconColor: Colors.white,
                 iconSize: Dimensions.height10*5/2,
                 size: Dimensions.height10*5),
-                bigText: BigText(text: userController.userModel.phone)),
+                bigText: BigText(text: userController.userModel!.phone)),
               
                 SizedBox(height: Dimensions.height20),
               
@@ -80,7 +80,7 @@ class AccountPage extends StatelessWidget {
                 iconColor: Colors.white,
                 iconSize: Dimensions.height10*5/2,
                 size: Dimensions.height10*5),
-                bigText: BigText(text: userController.userModel.email)),
+                bigText: BigText(text: userController.userModel!.email)),
               
                 SizedBox(height: Dimensions.height20),
               

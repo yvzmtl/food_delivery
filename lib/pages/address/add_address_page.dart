@@ -5,6 +5,8 @@ import 'package:flutter_food_delivery/controllers/location_controller.dart';
 import 'package:flutter_food_delivery/controllers/user_controller.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
+import 'package:flutter_food_delivery/widgets/app_text_field.dart';
+import 'package:flutter_food_delivery/widgets/big_text.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -55,7 +57,15 @@ class _AddAddressPageState extends State<AddAddressPage> {
         title: Text("Adres Ekle",),
         backgroundColor: AppColors.mainColor,
       ),
-      body: Column(
+        body: GetBuilder<LocationController>(
+          builder: (locationController) {
+            _addressController.text = '${locationController.placemark.name??''}'
+            '${locationController.placemark.locality??''}'
+            '${locationController.placemark.postalCode??''}'
+            '${locationController.placemark.country??''}';
+            print("add_address_page benim adresim = "+_addressController.text);
+
+            return Column(
         children: [
           Container(
             height: Dimensions.height10*14,
@@ -70,12 +80,32 @@ class _AddAddressPageState extends State<AddAddressPage> {
             ),
             child: Stack(
               children: [
-                GoogleMap(initialCameraPosition:CameraPosition(target: _initialPosition,zoom: 17) )
+                      GoogleMap(
+                        initialCameraPosition:
+                        CameraPosition(target: _initialPosition, zoom: 17),
+                          zoomControlsEnabled: false,
+                          compassEnabled: false,
+                          indoorViewEnabled: true,
+                          mapToolbarEnabled: false,
+                          onCameraIdle: () {
+                            locationController.updatePosition(_cameraPosition,true);
+                          },
+                          onCameraMove: ((position) =>_cameraPosition = position),
+                          onMapCreated: (controller) {
+                            locationController.setMapController(controller);
+                          },
+                      )
               ],
             ),
-          )
+          ),
+          SizedBox(height: Dimensions.height20),
+          BigText(text: "Sipariş Adresi"),
+          SizedBox(height: Dimensions.height20),
+          AppTextWidget(textController: _addressController, hintText: "Adres", icon: Icons.map,textinputtype: TextInputType.text),
         ],
-      ),
+            );
+          },
+        )
     );
   }
 }

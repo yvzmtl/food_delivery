@@ -12,11 +12,15 @@ class AppConstants {
   static const RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";
   // static const DRINKS_PRODUCT_URI = "/api/v1/products/drinks";
   static const UPLOAD_URL = "/uploads/";
+  
 
   //auth
   static const String REGISTRATION_URI = "/api/v1/auth/register";
   static const String LOGIN_URI = "/api/v1/auth/login";
   static const String USER_INFO_URI = "/api/v1/customer/info";
+
+  static const USER_ADDRESS = "user-address";
+  static const GEOCODE_URI = "/api/v1/config/geocode-api";
 
   static const String TOKEN = "";
   static const String EMAIL = "";
