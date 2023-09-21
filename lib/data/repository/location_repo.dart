@@ -14,7 +14,6 @@ class LocationRepo{
   Future<Response> getAddressfromGeocode(LatLng latLng) async {
     return await apiClient.getData('${AppConstants.GEOCODE_URI}'
     '?lat=${latLng.latitude}&lng=${latLng.longitude}');
-  }
-
+  } 
   
 }

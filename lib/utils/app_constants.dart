@@ -22,6 +22,7 @@ class AppConstants {
   static const USER_ADDRESS = "user-address";
   static const GEOCODE_URI = "/api/v1/config/geocode-api";
 
+
   static const String TOKEN = "";
   static const String EMAIL = "";
   static const String PASSWORD = "";

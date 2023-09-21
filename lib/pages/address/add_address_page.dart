@@ -65,7 +65,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             '${locationController.placemark.country??''}';
             print("add_address_page benim adresim = "+_addressController.text);
 
-            return Column(
+            return Column( 
         children: [
           Container(
             height: Dimensions.height10*14,

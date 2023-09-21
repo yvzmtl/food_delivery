@@ -75,7 +75,7 @@ class AccountPage extends StatelessWidget {
                 SizedBox(height: Dimensions.height20),
               
                 //email
-                AccountWidget(appIcon: AppIcon(icon: Icons.email,
+                AccountWidget(appIcon: AppIcon(icon: Icons.email, 
                 backgroundColor: Colors.redAccent,
                 iconColor: Colors.white,
                 iconSize: Dimensions.height10*5/2,
