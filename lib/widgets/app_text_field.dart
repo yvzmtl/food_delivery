@@ -8,10 +8,10 @@ class AppTextWidget extends StatelessWidget {
   final TextEditingController textController;
   final String hintText;
   final IconData icon;
-  final TextInputType textinputtype;
+  final TextInputType? textinputtype;
   bool isObsurce;
    AppTextWidget({super.key, required this.textController, required this.hintText, 
-        required this.icon, required this.textinputtype,this.isObsurce=false});
+        required this.icon, this.textinputtype,this.isObsurce=false});
 
   @override
   Widget build(BuildContext context) {
