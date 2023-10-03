@@ -4,9 +4,9 @@ import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/controllers/location_controller.dart';
 import 'package:flutter_food_delivery/controllers/user_controller.dart';
 import 'package:flutter_food_delivery/models/address_model.dart';
+import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
-import 'package:flutter_food_delivery/widgets/app_icon.dart';
 import 'package:flutter_food_delivery/widgets/app_text_field.dart';
 import 'package:flutter_food_delivery/widgets/big_text.dart';
 import 'package:get/get.dart';
@@ -40,6 +40,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
       Get.find<UserController>().getUserInfo();
     }
     if (Get.find<LocationController>().addressList.isNotEmpty) {
+      Get.find<LocationController>().getUserAddress();
       _cameraPosition = CameraPosition(target: LatLng(
         double.parse(Get.find<LocationController>().getAddress["latitude"]),
         double.parse(Get.find<LocationController>().getAddress["longitude"])
@@ -227,7 +228,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
 
                           locationController.addAddress(_addressModel).then((response){
                             if (response.isSuccess) {
-                              Get.back();
+                              // Get.back();
+                              Get.toNamed(RouteHelper.getInitial());
                               Get.snackbar("Adres", "Adres başarıyla eklendi");
                             } else {
                               Get.snackbar("Adres", "Adres kayıt edilemedi");

@@ -82,6 +82,7 @@ class LocationController extends GetxController implements GetxService{
       }
     }
   }
+
   
   // Future<String> getAddressfromGeocode(LatLng latLng) async {
   //   String _address = "Bilinmeyen Lokasyon bulundu";
@@ -92,6 +93,7 @@ class LocationController extends GetxController implements GetxService{
   //   }else{
   //     print("location controller = Google api ile bağlantı kurulamadı");
   //   }
+  //   update();
   //   return _address;
   // }
 
@@ -121,7 +123,7 @@ class LocationController extends GetxController implements GetxService{
     } catch (e) {
       print('Error getting geocode: $e');
     }
-
+    update();
     return address;
   }
 
@@ -148,11 +150,12 @@ class LocationController extends GetxController implements GetxService{
     ResponseModel responseModel;
     if (response.statusCode == 200) {
       await getAddressList();
-      String message = response.body("message");
+      String message = response.body["message"];
       responseModel = ResponseModel(true, message);
       await saveUserAddress(addressModel);
     } else {
       print("location controller = adres kayıt edilemedi");
+      print("location controller"+response.statusText!);
       responseModel = ResponseModel(false, response.statusText!);
     }
     update();
@@ -178,5 +181,11 @@ class LocationController extends GetxController implements GetxService{
   Future<bool> saveUserAddress(AddressModel addressModel) async {
     String userAddress = jsonEncode(addressModel.toJson());
     return await locationRepo.saveUserAddress(userAddress);
+  }
+
+  void clearAddressList(){
+    _addressList=[];
+    _allAddressList=[];
+    update();
   }
 }

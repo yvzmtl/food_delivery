@@ -26,7 +26,10 @@ class RouteHelper {
 
   static List<GetPage> routes = [
     // GetPage(name: initial, page: () => MainFoodPage()),
-    GetPage(name: initial, page: () => HomePage()),
+    GetPage(name: initial, page: () {
+      return HomePage();
+    },transition: Transition.fade),
+    
     GetPage(name: splashPage, page: () => SplashScreen()),
     
     // GetPage(name: popularFood, page: () => PopularFoodDetail()),

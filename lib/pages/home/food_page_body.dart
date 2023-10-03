@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
 import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
 import 'package:flutter_food_delivery/models/products_model.dart';
-import 'package:flutter_food_delivery/pages/food/popular_food_detail.dart';
-import 'package:flutter_food_delivery/pages/food/recommended_food_detail.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/app_constants.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';

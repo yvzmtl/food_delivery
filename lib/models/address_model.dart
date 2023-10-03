@@ -23,6 +23,7 @@ class AddressModel{
     _contactPersonNumber = contactPersonNumber;
     _latitude = latitude;
     _longitude = longitude;
+    _address = address;
   }
 
   String get address => _address;
@@ -48,6 +49,7 @@ class AddressModel{
     data['address_type'] = this._addressType;
     data['contact_person_name'] = this._contactPersonName;
     data['contact_person_number'] = this._contactPersonNumber;
+    data['address'] = this._address;
     data['latitude'] = this._latitude;
     data['longitude'] = this._longitude;
     return data;

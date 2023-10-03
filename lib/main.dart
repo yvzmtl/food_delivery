@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
 import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
-import 'package:flutter_food_delivery/pages/address/add_address_page.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:get/get.dart';
 import 'helper/dependencies.dart' as dep;
@@ -24,9 +23,9 @@ class MyApp extends StatelessWidget {
       return GetBuilder<RecommendedProductController>(builder: (_) {
         return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-         home: AddAddressPage(),
-        //  initialRoute: RouteHelper.getSplashPage(),
-        //  getPages: RouteHelper.routes,
+        //  home: AddAddressPage(),
+         initialRoute: RouteHelper.getSplashPage(),
+         getPages: RouteHelper.routes,
         );
       });
     });

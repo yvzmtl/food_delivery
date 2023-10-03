@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/base/custom_loader.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
+import 'package:flutter_food_delivery/controllers/location_controller.dart';
 import 'package:flutter_food_delivery/controllers/user_controller.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
@@ -85,12 +86,33 @@ class AccountPage extends StatelessWidget {
                 SizedBox(height: Dimensions.height20),
               
                 //address
-                AccountWidget(appIcon: AppIcon(icon: Icons.location_on,
-                backgroundColor: Colors.blueAccent,
-                iconColor: Colors.white,
-                iconSize: Dimensions.height10*5/2,
-                size: Dimensions.height10*5),
-                bigText: BigText(text: "İstanbul")),
+                GetBuilder<LocationController>(builder: (locationController){
+                  if (_userLoggenIn && locationController.addressList.isEmpty) {
+                    return GestureDetector(
+                      onTap: () {
+                        Get.offNamed(RouteHelper.getAddressPage());
+                      },
+                      child: AccountWidget(appIcon: AppIcon(icon: Icons.location_on,
+                        backgroundColor: Colors.blueAccent,
+                        iconColor: Colors.white,
+                        iconSize: Dimensions.height10*5/2,
+                        size: Dimensions.height10*5),
+                        bigText: BigText(text: "İstanbul")),
+                    );
+                    }else{
+                      return GestureDetector(
+                      onTap: () {
+                        Get.offNamed(RouteHelper.getAddressPage());
+                      },
+                      child: AccountWidget(appIcon: AppIcon(icon: Icons.location_on,
+                        backgroundColor: Colors.blueAccent,
+                        iconColor: Colors.white,
+                        iconSize: Dimensions.height10*5/2,
+                        size: Dimensions.height10*5),
+                        bigText: BigText(text: "İstanbul")),
+                    );
+                    }
+                }),
               
                 SizedBox(height: Dimensions.height20),
               
@@ -111,10 +133,12 @@ class AccountPage extends StatelessWidget {
                       Get.find<AuthController>().clearSharedData();
                       Get.find<CartController>().clear();
                       Get.find<CartController>().clearCartHistory();
+                      Get.find<LocationController>().clearAddressList();
                       // Get.toNamed(RouteHelper.getInitial());
                       Get.toNamed(RouteHelper.getSignInPage());
                     }else{
-                      print("Zaten çıkış yapılmış");
+                      Get.offNamed(RouteHelper.getSignInPage());
+                      print("account page = Zaten çıkış yapılmış");
                     }
                   },
                   child: AccountWidget(appIcon: AppIcon(icon: Icons.logout,
