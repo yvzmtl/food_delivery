@@ -1,6 +1,5 @@
 
 import 'dart:convert';
-
 import 'package:flutter_food_delivery/data/repository/location_repo.dart';
 import 'package:flutter_food_delivery/models/address_model.dart';
 import 'package:flutter_food_delivery/models/response_model.dart';
@@ -57,19 +56,25 @@ class LocationController extends GetxController implements GetxService{
             longitude: position.target.longitude, 
             latitude: position.target.latitude, 
             timestamp: DateTime.now(), 
-            accuracy: 1, altitude: 1, 
+            accuracy: 1, 
+            altitude: 1, 
             heading: 1, 
             speed: 1, 
-            speedAccuracy: 1);
+            speedAccuracy: 1,
+            altitudeAccuracy: 1,
+            headingAccuracy: 1);
         }else{
           _pickPosition = Position(
             longitude: position.target.longitude, 
             latitude: position.target.latitude, 
             timestamp: DateTime.now(), 
-            accuracy: 1, altitude: 1, 
+            accuracy: 1,
+            altitude: 1, 
             heading: 1, 
             speed: 1, 
-            speedAccuracy: 1);
+            speedAccuracy: 1,
+            altitudeAccuracy: 1,
+            headingAccuracy: 1);
         }
         if (_changeAddress) {
           String _address = await getAddressFromGeocode(
@@ -187,5 +192,9 @@ class LocationController extends GetxController implements GetxService{
     _addressList=[];
     _allAddressList=[];
     update();
+  }
+
+  String getUserAddressFromLocalStorage() {
+    return locationRepo.getUserAddress();
   }
 }

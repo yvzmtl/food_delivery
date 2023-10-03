@@ -36,10 +36,13 @@ class _AddAddressPageState extends State<AddAddressPage> {
     // TODO: implement initState
     super.initState();
     _isLogged = Get.find<AuthController>().userLoggedIn();
-    if (_isLogged&&Get.find<UserController>().userModel==null) {
+    if (_isLogged && Get.find<UserController>().userModel==null) {
       Get.find<UserController>().getUserInfo();
     }
     if (Get.find<LocationController>().addressList.isNotEmpty) {
+      if (Get.find<LocationController>().getUserAddressFromLocalStorage()=="") {
+        Get.find<LocationController>().saveUserAddress(Get.find<LocationController>().addressList.last);
+      }
       Get.find<LocationController>().getUserAddress();
       _cameraPosition = CameraPosition(target: LatLng(
         double.parse(Get.find<LocationController>().getAddress["latitude"]),
@@ -62,8 +65,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
       ),
         body: GetBuilder<UserController>(
           builder: (userController) {
-            if (userController.userModel != null &&
-                _contactPersonName.text.isEmpty) {
+            if (userController.userModel != null && _contactPersonName.text.isEmpty) {
               _contactPersonName.text = '${userController.userModel?.name}';
               _contactPersonPhone.text = '${userController.userModel?.phone}';
             }
@@ -93,8 +95,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
                             border: Border.all(width: 2, color: AppColors.mainColor)),
                         child: Stack(
                           children: [
-                        GoogleMap(
-                          initialCameraPosition:CameraPosition(target: _initialPosition, zoom: 17),
+                          GoogleMap(initialCameraPosition:
+                          CameraPosition(target: _initialPosition, zoom: 17),
                             zoomControlsEnabled: false,
                             compassEnabled: false,
                             indoorViewEnabled: true,
@@ -104,8 +106,11 @@ class _AddAddressPageState extends State<AddAddressPage> {
                               locationController.updatePosition(_cameraPosition,true);
                             },
                             onCameraMove: ((position) =>_cameraPosition = position),
-                            onMapCreated: (controller) {
+                            onMapCreated: (GoogleMapController controller) {
                               locationController.setMapController(controller);
+                              if (Get.find<LocationController>().addressList.isEmpty) {
+                                //locationController.getCurrentLocation(true, mapController:controller);
+                              }
                               },
                             )
                 ],
