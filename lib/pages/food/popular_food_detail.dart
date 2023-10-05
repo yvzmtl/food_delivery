@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
@@ -33,12 +34,28 @@ class PopularFoodDetail extends StatelessWidget {
               child: Container(
                 width: double.maxFinite, //genişlik olarak ekranı kapla
                 height: Dimensions.popularFoodImageSize,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(AppConstants.BASE_URL +
-                            AppConstants.UPLOAD_URL +
-                            product.img!),
-                        fit: BoxFit.cover)),
+                child: CachedNetworkImage(
+                                progressIndicatorBuilder: (context, url, progress) => Center(
+                                child: CircularProgressIndicator(
+                                value: progress.progress,
+                                ),
+                               ),
+                                imageUrl: AppConstants.BASE_URL +AppConstants.UPLOAD_URL +product.img!,
+                              imageBuilder: (context, imageProvider) => Container(
+                                decoration: BoxDecoration(
+                                image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                                 ),
+                               ),
+                              ),
+                            ),
+                // decoration: BoxDecoration(
+                //     image: DecorationImage(
+                //         image: NetworkImage(AppConstants.BASE_URL +
+                //             AppConstants.UPLOAD_URL +
+                //             product.img!),
+                //         fit: BoxFit.cover)),
               ),
             ),
             //icon widgets

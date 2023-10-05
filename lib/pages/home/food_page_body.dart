@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
@@ -119,7 +120,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         ),
         //recommended food
         // yemek listesi ve resimler
-        GetBuilder<RecommendedProductController>(builder: (recommendedProduct) {
+        GetBuilder<RecommendedProductController>(builder: (recommendedProduct)  {
           return recommendedProduct.isLoaded
               ? ListView.builder(
                   shrinkWrap: true,
@@ -145,18 +146,36 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                             Container(
                               width: Dimensions.width120,
                               height: Dimensions.height120,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.radius20),
-                                color: Colors.white38,
+                              child: CachedNetworkImage(
+                                progressIndicatorBuilder: (context, url, progress) => Center(
+                                child: CircularProgressIndicator(
+                                value: progress.progress,
+                                ),
+                               ),
+                                imageUrl: AppConstants.BASE_URL +AppConstants.UPLOAD_URL +recommendedProductList.img!,
+                              imageBuilder: (context, imageProvider) => Container(
+                                decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    //image: AssetImage("assets/image/food1.png"),
-                                    image: NetworkImage(AppConstants.BASE_URL +
-                                        AppConstants.UPLOAD_URL +
-                                        recommendedProductList.img!),
-                                    fit: BoxFit.cover),
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                                 ),
+                               ),
                               ),
                             ),
+                              ),
+
+                              // decoration: BoxDecoration(
+                              //   borderRadius:
+                              //       BorderRadius.circular(Dimensions.radius20),
+                              //   color: Colors.white38,
+                              //   image: DecorationImage(
+                              //       //image: AssetImage("assets/image/food1.png"),
+                              //       image:  NetworkImage(AppConstants.BASE_URL +
+                              //           AppConstants.UPLOAD_URL +
+                              //           "${recommendedProductList.img!}"),
+                              //       fit: BoxFit.cover),
+                              // ),
+                            // ),
                             //text container
                             Expanded(
                               child: Container(
@@ -267,17 +286,37 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             child: Container(
               height: Dimensions.pageViewContainer,
               margin: EdgeInsets.only(
-                  left: Dimensions.width10, right: Dimensions.width10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.radius30),
-                //color: position.isEven ? Color(0xFF89dad0) : Color(0xFF5445b2),
-                image: DecorationImage(
-                    //image: AssetImage("assets/image/food1.png"),
-                    image: NetworkImage(AppConstants.BASE_URL +
-                        AppConstants.UPLOAD_URL +
-                        popularProduct.img!),
-                    fit: BoxFit.cover),
-              ),
+              left: Dimensions.width10, right: Dimensions.width10),
+              child: CachedNetworkImage(
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(
+                    value: progress.progress,
+                  ),
+                ),
+                imageUrl: AppConstants.BASE_URL +AppConstants.UPLOAD_URL +popularProduct.img!,
+                              imageBuilder: (context, imageProvider) => Container(
+                                decoration: BoxDecoration(
+                                image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                               // colorFilter: const ColorFilter.mode(
+                               // Colors.red,
+                               // BlendMode.colorBurn,
+                                 ),
+                               ),
+                              ),
+                            ),
+
+              // decoration: BoxDecoration(
+              //   borderRadius: BorderRadius.circular(Dimensions.radius30),
+              //   //color: position.isEven ? Color(0xFF89dad0) : Color(0xFF5445b2),
+              //   image: DecorationImage(
+              //       //image: AssetImage("assets/image/food1.png"),
+              //       image: NetworkImage(AppConstants.BASE_URL +
+              //           AppConstants.UPLOAD_URL +
+              //           "${popularProduct.img!}"),
+              //       fit: BoxFit.cover),
+              // ),
             ),
           ),
           Align(

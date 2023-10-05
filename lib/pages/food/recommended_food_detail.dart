@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
@@ -105,12 +106,35 @@ class RecommendedFoodDetail extends StatelessWidget {
               backgroundColor: AppColors.yellowColor,
               expandedHeight: 300,
               flexibleSpace: FlexibleSpaceBar(
-                  background: Image(
-                      image: NetworkImage(AppConstants.BASE_URL +
-                          AppConstants.UPLOAD_URL +
-                          recommendedProductList.img!),
-                      width: double.maxFinite,
-                      fit: BoxFit.cover)
+                  background: 
+                 CachedNetworkImage(
+                                progressIndicatorBuilder: (context, url, progress) => Center(
+                                child: CircularProgressIndicator(
+                                value: progress.progress,
+                                ),
+                               ),
+                                imageUrl: AppConstants.BASE_URL +AppConstants.UPLOAD_URL +recommendedProductList.img!,
+                                width: double.maxFinite,
+                              imageBuilder: (context, imageProvider) => Container(
+                                decoration: BoxDecoration(
+                                image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                                 ),
+                               ),
+                              ),
+                            ),
+                  
+                  // Image(
+                  //     image: NetworkImage(AppConstants.BASE_URL +
+                  //         AppConstants.UPLOAD_URL +
+                  //         recommendedProductList.img!),
+                  //     width: double.maxFinite,
+                  //     fit: BoxFit.cover)
+
+
+
+
                   // Image.asset("assets/image/food1.png",
                   //     width: double.maxFinite, fit: BoxFit.cover),
                   ),

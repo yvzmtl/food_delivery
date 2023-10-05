@@ -1,4 +1,5 @@
 import 'package:flutter_food_delivery/pages/address/add_address_page.dart';
+import 'package:flutter_food_delivery/pages/address/pick_address_map.dart';
 import 'package:flutter_food_delivery/pages/auth/sign_in_page.dart';
 import 'package:flutter_food_delivery/pages/cart/cart_page.dart';
 import 'package:flutter_food_delivery/pages/food/popular_food_detail.dart';
@@ -15,6 +16,8 @@ class RouteHelper {
   static const String cartPage = "/cart-page";
   static const String signIn = "/sign-in";
   static const String addAddress = "/add-address";
+  static const String pickAddAddress = "/pick-address";
+
 
   static String getInitial() => '$initial';
   static String getSplashPage() => '$splashPage';
@@ -23,16 +26,15 @@ class RouteHelper {
   static String getCartPage() => '$cartPage';
   static String getSignInPage() => '$signIn';
   static String getAddressPage() => '$addAddress';
+  static String getPickAddressPage() => '$pickAddAddress';
 
   static List<GetPage> routes = [
-    // GetPage(name: initial, page: () => MainFoodPage()),
     GetPage(name: initial, page: () {
       return HomePage();
     },transition: Transition.fade),
     
     GetPage(name: splashPage, page: () => SplashScreen()),
     
-    // GetPage(name: popularFood, page: () => PopularFoodDetail()),
     GetPage(
         name: popularFood,
         page: () {
@@ -72,5 +74,10 @@ class RouteHelper {
           return AddAddressPage();
         },
         transition: Transition.fadeIn),
+
+        GetPage(name: pickAddAddress, page: () {
+          PickAddressMap _pickAddressMap = Get.arguments;
+      return _pickAddressMap;
+    }),
   ];
 }

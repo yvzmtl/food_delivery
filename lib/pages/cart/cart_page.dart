@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/base/no_data_page.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
@@ -109,16 +110,32 @@ class CartPage extends StatelessWidget {
                                         margin: EdgeInsets.only(
                                             bottom: Dimensions.height10,
                                             left: Dimensions.width10),
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                  AppConstants.BASE_URL +
-                                                      AppConstants.UPLOAD_URL +
-                                                      cartController.getItems[index].img!),
-                                            ),
-                                            borderRadius: BorderRadius.circular(Dimensions.radius20),
-                                            color: Colors.white),
+                                            child: CachedNetworkImage(
+                                progressIndicatorBuilder: (context, url, progress) => Center(
+                                child: CircularProgressIndicator(
+                                value: progress.progress,
+                                ),
+                               ),
+                                imageUrl: AppConstants.BASE_URL +AppConstants.UPLOAD_URL +cartController.getItems[index].img!,
+                              imageBuilder: (context, imageProvider) => Container(
+                                decoration: BoxDecoration(
+                                image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                                 ),
+                               ),
+                              ),
+                            ),
+                                        // decoration: BoxDecoration(
+                                        //     image: DecorationImage(
+                                        //       fit: BoxFit.cover,
+                                        //       image: NetworkImage(
+                                        //           AppConstants.BASE_URL +
+                                        //               AppConstants.UPLOAD_URL +
+                                        //               cartController.getItems[index].img!),
+                                        //     ),
+                                        //     borderRadius: BorderRadius.circular(Dimensions.radius20),
+                                        //     color: Colors.white),
                                       ),
                                     ),
                                     SizedBox(width: Dimensions.width10),
