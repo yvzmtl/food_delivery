@@ -101,8 +101,8 @@ class PopularFoodDetail extends StatelessWidget {
                               : Container(),
                           Get.find<PopularProductController>().totalItems >= 1
                               ? Positioned(
-                                  right: 3,
-                                  top: 3,
+                                right: 3,
+                                top: 3,
                                   child: BigText(
                                       text: Get.find<PopularProductController>()
                                           .totalItems
@@ -161,12 +161,12 @@ class PopularFoodDetail extends StatelessWidget {
                 top: Dimensions.height30,
                 bottom: Dimensions.height30,
                 left: Dimensions.width20,
-                right: Dimensions.width20),
+                right: Dimensions.width20,),
             decoration: BoxDecoration(
               color: AppColors.buttonBackgroundColor,
               borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(Dimensions.radius20 * 2),
-                  topLeft: Radius.circular(Dimensions.radius20 * 2)),
+                  topRight: Radius.circular(Dimensions.radius20 * 2,),
+                  topLeft: Radius.circular(Dimensions.radius20 * 2,)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

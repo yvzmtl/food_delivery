@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/base/custom_button.dart';
 import 'package:flutter_food_delivery/controllers/location_controller.dart';
+import 'package:flutter_food_delivery/models/address_model.dart';
+import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:get/get.dart';
@@ -93,7 +96,41 @@ class _PickAddressMapState extends State<PickAddressMap> {
                         )
                       ],
                     ),
-                  ))
+                  ),
+                ),
+                Positioned(
+                  bottom: Dimensions.bottomHeight5*20,
+                  left: Dimensions.width20*2,
+                  width: Dimensions.width20*15,
+                  child: CustomButton(
+                    buttonText: "Seçilen Adres",
+                    onPressed: locationController.loading?(){
+                      print("değer boş olmamalı");}
+                      :(){
+                      if (locationController.pickPosition.latitude!=0 && 
+                          locationController.pickPlacemark.name!=null) {
+                        if (widget.fromAddress) {
+                          if (widget.googleMapController!=null) {
+                            print("Butona şimdi tıklayabilirsiniz");
+                            widget.googleMapController!.moveCamera(CameraUpdate.newCameraPosition(
+                              CameraPosition(target: LatLng(
+                                locationController.pickPosition.latitude,
+                                locationController.pickPosition.longitude))));
+                            locationController.setAddressData();
+                          }
+                          Get.back();
+                          // locationController.saveUserAddress(
+                          //   AddressModel(
+                          //     addressType: "home", 
+                          //     address: locationController.pickPlacemark.name,
+                          //     latitude: locationController.pickPosition.latitude.toString(),
+                          //     longitude: locationController.pickPosition.longitude.toString(),),);
+                          // Get.toNamed(RouteHelper.getAddressPage());
+                        }
+                      }
+                    },
+                    ),
+                  ),
               ]),
             ),
           )),

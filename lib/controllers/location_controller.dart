@@ -87,6 +87,8 @@ class LocationController extends GetxController implements GetxService{
       }
       _loading = false;
       update();
+    }else{
+      _updateAddressData = true;
     }
   }
 
@@ -198,5 +200,12 @@ class LocationController extends GetxController implements GetxService{
 
   String getUserAddressFromLocalStorage() {
     return locationRepo.getUserAddress();
+  }
+
+  void setAddressData(){
+    _position = _pickPosition;
+    _placemark = _pickPlacemark;
+    _updateAddressData = false;
+    update();
   }
 }

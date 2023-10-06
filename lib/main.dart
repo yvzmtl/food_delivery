@@ -3,6 +3,7 @@ import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
 import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
+import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:get/get.dart';
 import 'helper/dependencies.dart' as dep;
 
@@ -26,6 +27,10 @@ class MyApp extends StatelessWidget {
         //  home: AddAddressPage(),
          initialRoute: RouteHelper.getSplashPage(),
          getPages: RouteHelper.routes,
+         theme: ThemeData(
+          primaryColor: AppColors.mainColor,
+          fontFamily: "Lato"
+         ),
         );
       });
     });

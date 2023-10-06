@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/base/no_data_page.dart';
@@ -24,8 +25,7 @@ class CartHistory extends StatelessWidget {
 
     for (var i = 0; i < getCartHistoryList.length; i++) {
       if (cartItemsPerOrder.containsKey(getCartHistoryList[i].time)) {
-        cartItemsPerOrder.update(
-            getCartHistoryList[i].time!, (value) => ++value);
+        cartItemsPerOrder.update(getCartHistoryList[i].time!, (value) => ++value);
       } else {
         cartItemsPerOrder.putIfAbsent(getCartHistoryList[i].time!, () => 1);
       }
@@ -72,8 +72,7 @@ class CartHistory extends StatelessWidget {
         GetBuilder<CartController>(builder: (_cartController){
           return _cartController.getCartHistoryList().length > 0 ?
           Expanded(
-          child: Container(
-          // color: Colors.blueAccent,
+                  child: Container(
           margin: EdgeInsets.only(
               top: Dimensions.height20,
               left: Dimensions.width20,
@@ -89,8 +88,7 @@ class CartHistory extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: Dimensions.height20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // BigText(text: AppConstants.datetimeFormat(getCartHistoryList[listCounter].time!)),
+                                children: [
                         timeWidget(listCounter),
                         SizedBox(height: Dimensions.height10),
                         Row(
@@ -109,34 +107,13 @@ class CartHistory extends StatelessWidget {
                                         width: Dimensions.width20 * 4,
                                         margin: EdgeInsets.only(right: Dimensions.width10 / 2),
                                         child: CachedNetworkImage(
-                                progressIndicatorBuilder: (context, url, progress) => Center(
-                                child: CircularProgressIndicator(
-                                value: progress.progress,
-                                ),
-                               ),
-                                imageUrl: AppConstants.BASE_URL +AppConstants.UPLOAD_URL +getCartHistoryList[listCounter - 1].img!,
-                              imageBuilder: (context, imageProvider) => Container(
-                                decoration: BoxDecoration(
-                                image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                                 ),
-                               ),
-                              ),
-                            ),
-                                        // decoration: BoxDecoration(
-                                        //     borderRadius: BorderRadius.circular(Dimensions.radius15 / 2),
-                                        //     image: DecorationImage(
-                                        //       fit: BoxFit.cover,
-                                        //       image: NetworkImage(
-                                        //           AppConstants.BASE_URL +
-                                        //           AppConstants.UPLOAD_URL +
-                                        //           getCartHistoryList[listCounter - 1].img!),
-                                        //     )),
-                                      )
-                                    : Container();
-                              }),
-                            ),
+                                                progressIndicatorBuilder: (context, url, progress) => Center(child: CircularProgressIndicator(value: progress.progress)),
+                                                imageUrl: AppConstants.BASE_URL + AppConstants.UPLOAD_URL + getCartHistoryList[listCounter - 1].img!,
+                                                imageBuilder: (context, imageProvider) => Container(decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.cover)))),
+                                              )
+                                              : Container();
+                                        }),
+                                      ),
                             Container(
                               height: Dimensions.height80,
                               child: Column(
@@ -164,27 +141,22 @@ class CartHistory extends StatelessWidget {
                                       Get.toNamed(RouteHelper.getCartPage());
                                     },
                                     child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: Dimensions.width10/2,
-                                                                    vertical: Dimensions.height10/2),
+                                      padding: EdgeInsets.symmetric(horizontal: Dimensions.width10 / 2, vertical: Dimensions.height10 / 2),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(Dimensions.radius15/3),
                                         border: Border.all(width: 1,color: AppColors.mainColor),
                                       ),
-                                      child: SmallText(text: "Daha Fazla",color: AppColors.mainColor,),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          ),
+                                                    child: SmallText(
+                                                      text: "Daha Fazla",
+                                                      color: AppColors.mainColor,
+                                                    ),
+                                                  )
+                                  ),
+                                            ],
+                                          ))
+                                    ])
+                                  ]))
+                          ])))
           ): 
           SizedBox(
             height: MediaQuery.of(context).size.height/1.5,

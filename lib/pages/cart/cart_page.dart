@@ -126,16 +126,7 @@ class CartPage extends StatelessWidget {
                                ),
                               ),
                             ),
-                                        // decoration: BoxDecoration(
-                                        //     image: DecorationImage(
-                                        //       fit: BoxFit.cover,
-                                        //       image: NetworkImage(
-                                        //           AppConstants.BASE_URL +
-                                        //               AppConstants.UPLOAD_URL +
-                                        //               cartController.getItems[index].img!),
-                                        //     ),
-                                        //     borderRadius: BorderRadius.circular(Dimensions.radius20),
-                                        //     color: Colors.white),
+                                       
                                       ),
                                     ),
                                     SizedBox(width: Dimensions.width10),
