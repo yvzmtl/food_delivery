@@ -6,6 +6,7 @@ import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/controllers/location_controller.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
 import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
+import 'package:flutter_food_delivery/controllers/user_controller.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/app_constants.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
@@ -251,7 +252,8 @@ class CartPage extends StatelessWidget {
                       if (Get.find<LocationController>().addressList.isEmpty) {
                         Get.toNamed(RouteHelper.getAddressPage());
                       }else{
-                        Get.offNamed(RouteHelper.getInitial());
+                        // Get.offNamed(RouteHelper.getInitial());
+                        Get.offAllNamed(RouteHelper.getPaymentPage("100127", Get.find<UserController>().userModel!.id));
                       }
                     //cartController.addToCartHistory();
                     }else{

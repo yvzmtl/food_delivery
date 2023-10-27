@@ -23,7 +23,11 @@ class AppConstants {
   static const USER_ADDRESS = "user-address";
   static const ADD_USER_ADDRESS = "/api/v1/customer/address/add";
   static const ADDRESS_LIST_URI = "/api/v1/customer/address/list";
+
   static const GEOCODE_URI = "/api/v1/config/geocode-api";
+  static const ZONE_URI = "/api/v1/config/get-zone-id";
+  static const SEARCH_LOCATION_URI = "/api/v1/config/place-api-autocomplete";
+  static const PALCE_DETAILS_URI = "/api/v1/config/place-api-details";
 
 
   static const String TOKEN = "";

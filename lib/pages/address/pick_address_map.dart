@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/base/custom_button.dart';
 import 'package:flutter_food_delivery/controllers/location_controller.dart';
-import 'package:flutter_food_delivery/models/address_model.dart';
-import 'package:flutter_food_delivery/routes/route.helper.dart';
+import 'package:flutter_food_delivery/pages/address/widgets/search_location_dialog_page.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:get/get.dart';
@@ -66,6 +65,13 @@ class _PickAddressMapState extends State<PickAddressMap> {
                   onCameraIdle: () {
                     Get.find<LocationController>().updatePosition(_cameraPosition, false);
                   },
+                  onMapCreated: (GoogleMapController mapController) {
+                    _mapController = mapController;
+                    if (!widget.fromAddress) {
+                      print("web den geldi");
+                      //Get.find<LocationController>()
+                    }
+                  },
                 ),
                 Center(
                   child: !locationController.loading?Image.asset("assets/image/pick_marker.png",
@@ -73,28 +79,35 @@ class _PickAddressMapState extends State<PickAddressMap> {
                   : CircularProgressIndicator()
                 ),
 
+                // adres seçilmesi ve gösterilmesi
                 Positioned(
                   top: Dimensions.height15*3,
                   left: Dimensions.width20,
                   right: Dimensions.width20,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.width10),
-                    height: Dimensions.height10*5,
-                    decoration: BoxDecoration(
-                      color: AppColors.mainColor,
-                      borderRadius: BorderRadius.circular(Dimensions.radius20/2)
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.location_on,size: 25,color: AppColors.yellowColor),
-                        Expanded(
-                          child: Text(
-                            '${locationController.pickPlacemark.name??''}',
-                            style: TextStyle(color: Colors.white,fontSize: Dimensions.fontSize15),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis)
-                        )
-                      ],
+                  child: InkWell(
+                    onTap: () {
+                      // Get.dialog(LocationDialogue(mapController: _mapController));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.width10),
+                      height: Dimensions.height10*5,
+                      decoration: BoxDecoration(
+                        color: AppColors.mainColor,
+                        borderRadius: BorderRadius.circular(Dimensions.radius20/2)
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.location_on,size: 25,color: AppColors.yellowColor),
+                          Expanded(
+                            child: Text(
+                              '${locationController.pickPlacemark.name??''}',
+                              style: TextStyle(color: Colors.white,fontSize: Dimensions.fontSize15),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis)),
+                          SizedBox(width: Dimensions.width10),
+                          Icon(Icons.search,size: 25,color: AppColors.yellowColor)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -102,11 +115,10 @@ class _PickAddressMapState extends State<PickAddressMap> {
                   bottom: Dimensions.bottomHeight5*20,
                   left: Dimensions.width20*2,
                   width: Dimensions.width20*15,
-                  child: CustomButton(
-                    buttonText: "Seçilen Adres",
-                    onPressed: locationController.loading?(){
-                      print("değer boş olmamalı");}
-                      :(){
+                  child: locationController.isLoading? Center(child: CircularProgressIndicator()):
+                   CustomButton(
+                    buttonText: locationController.inZone?widget.fromAddress? "Seçilen Adres":"Konumu Seç":"Servis hizmet alanında bulunmuyor",
+                    onPressed: (locationController.buttonDisabled || locationController.loading)?null :(){
                       if (locationController.pickPosition.latitude!=0 && 
                           locationController.pickPlacemark.name!=null) {
                         if (widget.fromAddress) {
@@ -119,6 +131,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                             locationController.setAddressData();
                           }
                           Get.back();
+                          // Get.toNamed(RouteHelper.getAddressPage());
                           // locationController.saveUserAddress(
                           //   AddressModel(
                           //     addressType: "home", 
