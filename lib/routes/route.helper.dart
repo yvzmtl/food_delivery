@@ -6,6 +6,7 @@ import 'package:flutter_food_delivery/pages/cart/cart_page.dart';
 import 'package:flutter_food_delivery/pages/food/popular_food_detail.dart';
 import 'package:flutter_food_delivery/pages/food/recommended_food_detail.dart';
 import 'package:flutter_food_delivery/pages/home/home_page.dart';
+import 'package:flutter_food_delivery/pages/payment/order_success_page.dart';
 import 'package:flutter_food_delivery/pages/payment/payment_page.dart';
 import 'package:flutter_food_delivery/pages/splash/splash_page.dart';
 import 'package:get/get.dart';
@@ -32,7 +33,7 @@ class RouteHelper {
   static String getAddressPage() => '$addAddress';
   static String getPickAddressPage() => '$pickAddAddress';
   static String getPaymentPage(String id, int userID)=>'$payment?id=$id&userID=$userID';
-  static String getOrderSuccessPage()=>'$orderSuccess';
+  static String getOrderSuccessPage(String orderID, String status)=>'$orderSuccess?id=$orderID&status=$status';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () {
@@ -92,5 +93,11 @@ class RouteHelper {
       userId: int.parse(Get.parameters['userID']!))
       )
     ),
+
+    GetPage(name: orderSuccess, page: (() => OrderSuccessPage(
+      orderID:Get.parameters['id']!,
+      status:Get.parameters['status'].toString().contains('success')?1:0
+      ))
+    )
   ];
 }

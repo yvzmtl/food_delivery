@@ -5,6 +5,7 @@ import 'package:flutter_food_delivery/pages/account/account_page.dart';
 import 'package:flutter_food_delivery/pages/cart/cart_history.dart';
 import 'package:flutter_food_delivery/pages/cart/cart_page.dart';
 import 'package:flutter_food_delivery/pages/home/main_food_page.dart';
+import 'package:flutter_food_delivery/pages/order/order_page.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 
 
@@ -22,7 +23,8 @@ class _HomePageState extends State<HomePage> {
     MainFoodPage(),
     CartHistory(),
     // SignInPage(),
-    CartPage(),
+    // CartPage(),
+    OrderPage(),
     AccountPage(),
   ];
 

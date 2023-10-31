@@ -24,10 +24,16 @@ class AppConstants {
   static const ADD_USER_ADDRESS = "/api/v1/customer/address/add";
   static const ADDRESS_LIST_URI = "/api/v1/customer/address/list";
 
+
+//config
   static const GEOCODE_URI = "/api/v1/config/geocode-api";
   static const ZONE_URI = "/api/v1/config/get-zone-id";
   static const SEARCH_LOCATION_URI = "/api/v1/config/place-api-autocomplete";
   static const PALCE_DETAILS_URI = "/api/v1/config/place-api-details";
+
+  //orders
+  static const String PLACE_DETAILS_URI = "/api/v1/customer/order/place";
+  static const String ORDER_LIST_URI = "/api/v1/customer/order/list";
 
 
   static const String TOKEN = "";

@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery/base/no_data_page.dart';
+import 'package:flutter_food_delivery/base/show_custom_snackbar.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
 import 'package:flutter_food_delivery/controllers/location_controller.dart';
+import 'package:flutter_food_delivery/controllers/order_controller.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
 import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
 import 'package:flutter_food_delivery/controllers/user_controller.dart';
+import 'package:flutter_food_delivery/models/place_order_model.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/app_constants.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
@@ -253,7 +256,23 @@ class CartPage extends StatelessWidget {
                         Get.toNamed(RouteHelper.getAddressPage());
                       }else{
                         // Get.offNamed(RouteHelper.getInitial());
-                        Get.offAllNamed(RouteHelper.getPaymentPage("100127", Get.find<UserController>().userModel!.id));
+                        //Get.offAllNamed(RouteHelper.getPaymentPage("100127", Get.find<UserController>().userModel!.id));
+                        var location = Get.find<LocationController>().getUserAddress();
+                        var cart = Get.find<CartController>().getItems;
+                        var user = Get.find<UserController>().userModel;
+                        PlaceOrderBody placeOrder = PlaceOrderBody(
+                          cart: cart, 
+                          orderAmount: 100.0, 
+                          distance: 10.0, 
+                          scheduleAt: '', 
+                          orderNote: 'Sipariş notu yok', 
+                          address: location.address, 
+                          latitude: location.latitude, 
+                          longitude: location.longitude, 
+                          contactPersonName: user!.name, 
+                          contactPersonNumber: user!.phone
+                        );
+                        Get.find<OrderController>().placeOrder(placeOrder,_callback);
                       }
                     //cartController.addToCartHistory();
                     }else{
@@ -283,5 +302,16 @@ class CartPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _callback(bool isSuccess,String message,String orderID){
+    if (isSuccess) {
+      Get.find<CartController>().clear();
+      Get.find<CartController>().removeCartSharedPreference();
+      Get.find<CartController>().addToCartHistory();
+      Get.offAllNamed(RouteHelper.getPaymentPage(orderID, Get.find<UserController>().userModel!.id));
+    } else {
+      showCustomSnackbar(message);
+    }
   }
 }
