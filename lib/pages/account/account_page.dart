@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/base/custom_app_bar.dart';
 import 'package:flutter_food_delivery/base/custom_loader.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/controllers/cart_controller.dart';
@@ -27,12 +28,9 @@ class AccountPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.mainColor,
-        title: Center(child: BigText(text: "Profil",size: 24,color: Colors.white),),
-        ),
+      appBar: CustomAppBar(title: "Profil"),
         
-        body: GetBuilder<UserController>(
+      body: GetBuilder<UserController>(
           builder: (userController) {
             return _userLoggenIn ? 
             (userController.isLoading? Container(

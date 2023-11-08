@@ -10,8 +10,14 @@ class AppTextWidget extends StatelessWidget {
   final IconData icon;
   final TextInputType? textinputtype;
   bool isObsurce;
-   AppTextWidget({super.key, required this.textController, required this.hintText, 
-        required this.icon, this.textinputtype,this.isObsurce=false});
+  bool maxLines;
+   AppTextWidget({super.key, 
+    required this.textController, 
+    required this.hintText, 
+    required this.icon, 
+    this.textinputtype,
+    this.isObsurce=false,
+    this.maxLines = false});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +37,7 @@ class AppTextWidget extends StatelessWidget {
               ]
             ),
             child: TextField(
+              maxLines: maxLines?3:1,
               obscureText: isObsurce?true:false,
               controller: textController,
               keyboardType: textinputtype,

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/base/common_text_button.dart';
 import 'package:flutter_food_delivery/base/no_data_page.dart';
 import 'package:flutter_food_delivery/base/show_custom_snackbar.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
@@ -10,12 +11,16 @@ import 'package:flutter_food_delivery/controllers/popular_product_controller.dar
 import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
 import 'package:flutter_food_delivery/controllers/user_controller.dart';
 import 'package:flutter_food_delivery/models/place_order_model.dart';
+import 'package:flutter_food_delivery/pages/order/delivery_options.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/app_constants.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
+import 'package:flutter_food_delivery/utils/styles.dart';
 import 'package:flutter_food_delivery/widgets/app_icon.dart';
+import 'package:flutter_food_delivery/widgets/app_text_field.dart';
 import 'package:flutter_food_delivery/widgets/big_text.dart';
+import 'package:flutter_food_delivery/pages/order/payment_option_button.dart';
 import 'package:flutter_food_delivery/widgets/small_text.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +29,7 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _noteController = TextEditingController();
     return Scaffold(
       body: Stack(children: [
         Positioned(
@@ -206,14 +212,15 @@ class CartPage extends StatelessWidget {
         })
        
       ]),
-      bottomNavigationBar: GetBuilder<CartController>(
-       
-        builder: (cartController) {
+      bottomNavigationBar: GetBuilder<OrderController>(builder: (orderController) {
+        _noteController.text = orderController.foodNote;
+        return GetBuilder<CartController>(
+         builder: (cartController) {
           return Container(
-            height: Dimensions.bottomHeight120,
+            height: Dimensions.bottomHeight120+45,
             padding: EdgeInsets.only(
                 top: Dimensions.height30,
-                bottom: Dimensions.height30,
+                bottom: Dimensions.height10,
                 left: Dimensions.width20,
                 right: Dimensions.width20),
             decoration: BoxDecoration(
@@ -223,84 +230,169 @@ class CartPage extends StatelessWidget {
                   topLeft: Radius.circular(Dimensions.radius20 * 2)),
             ),
             child: cartController.getItems.length > 0 ?
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
               children: [
-                Container(
-                  padding: EdgeInsets.only(
-                      top: Dimensions.height20,
-                      bottom: Dimensions.height20,
-                      left: Dimensions.width20,
-                      right: Dimensions.width20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimensions.radius20),
-                      color: Colors.white),
-                  child: Row(
-                    children: [
-                     
-                      SizedBox(width: Dimensions.width10 / 2),
-                      BigText(text: cartController.totalAmount.toString()+" ₺"),
-                      SizedBox(width: Dimensions.width10 / 2),
-                      
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap:
-                      //  cartController.totalAmount <= 0?
-                      // null:
-                      () {
-                    // popularProduct.addItem(product);
-                    if(Get.find<AuthController>().userLoggedIn()){
-                      if (Get.find<LocationController>().addressList.isEmpty) {
-                        Get.toNamed(RouteHelper.getAddressPage());
-                      }else{
-                        // Get.offNamed(RouteHelper.getInitial());
-                        //Get.offAllNamed(RouteHelper.getPaymentPage("100127", Get.find<UserController>().userModel!.id));
-                        var location = Get.find<LocationController>().getUserAddress();
-                        var cart = Get.find<CartController>().getItems;
-                        var user = Get.find<UserController>().userModel;
-                        PlaceOrderBody placeOrder = PlaceOrderBody(
-                          cart: cart, 
-                          orderAmount: 100.0, 
-                          distance: 10.0, 
-                          scheduleAt: '', 
-                          orderNote: 'Sipariş notu yok', 
-                          address: location.address, 
-                          latitude: location.latitude, 
-                          longitude: location.longitude, 
-                          contactPersonName: user!.name, 
-                          contactPersonNumber: user!.phone
-                        );
-                        Get.find<OrderController>().placeOrder(placeOrder,_callback);
-                      }
-                    //cartController.addToCartHistory();
-                    }else{
-                      Get.toNamed(RouteHelper.getSignInPage());
-                    }
-                  },
+                InkWell(
                   child: Container(
-                    padding: EdgeInsets.only(
-                        top: Dimensions.height15,
-                        bottom: Dimensions.height15,
-                        left: Dimensions.width15,
-                        right: Dimensions.width15),
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(Dimensions.radius20),
-                        color:
-                            cartController.totalAmount <= 0?
-                             Colors.grey:
-                            AppColors.mainColor),
-                    child: BigText(text: "Sipariş ver",
-                        color:Colors.white),
+                    width: double.maxFinite,
+                    child: CommonTextButton(text: "Ödeme Seç")
                   ),
+                  onTap: () {
+                    showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context, 
+                      builder: (_){
+                        return Column(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height*0.9,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(Dimensions.radius20),
+                                      topRight: Radius.circular(Dimensions.radius20)
+                                    ),
+                                  ),
+                                  child: Column(
+                                    
+                                    children: [
+                                      Container(
+                                        height: 520,
+                                        padding: EdgeInsets.only(
+                                          left: Dimensions.width20,
+                                          right: Dimensions.width20,
+                                          top: Dimensions.height20
+                                        ),
+                                        child:  Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const PaymentOptionButton(
+                                              icon: Icons.money,
+                                              title: "Nakit Ödeme",
+                                              subtitle: "Ödemeyi daha sonra elden gerçekleştir.",
+                                              index: 0
+                                            ),
+
+                                            SizedBox(height: Dimensions.height10),
+
+                                            const PaymentOptionButton(
+                                              icon: Icons.paypal_outlined,
+                                              title: "Kartla Ödeme",
+                                              subtitle: "Ödemenin güvenli ve hızlı yolu",
+                                              index: 1
+                                            ),
+
+                                            SizedBox(height: Dimensions.height30),
+                                            Text('Teslimat ayarları',style: robotoMedium),
+                                            DeliveryOptions(
+                                              value: "delivery", 
+                                              title: "Evde teslim", 
+                                              amount: double.parse(Get.find<CartController>().totalAmount.toString()), 
+                                              isFree: false),
+
+                                            SizedBox(height: Dimensions.height10/2),
+
+                                            DeliveryOptions(
+                                              value: "take away", 
+                                              title: "Paket", 
+                                              amount: 10.0, 
+                                              isFree: true),
+
+                                            SizedBox(height: Dimensions.height20),
+
+                                            AppTextWidget(
+                                              textController: _noteController, 
+                                              hintText: 'Notunuzu yazabilirsiniz', 
+                                              icon: Icons.note,
+                                              maxLines: true
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                    
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }).whenComplete(() => orderController.setFoodNote(_noteController.text.trim()));
+                  },
+                ),
+                SizedBox(height: Dimensions.height10/2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: Dimensions.height20,
+                          bottom: Dimensions.height20,
+                          left: Dimensions.width20,
+                          right: Dimensions.width20),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white),
+                      child: Row(
+                        children: [
+                         
+                          SizedBox(width: Dimensions.width10 / 2),
+                          BigText(text: cartController.totalAmount.toString()+" ₺"),
+                          SizedBox(width: Dimensions.width10 / 2),
+                          
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap:
+                          //  cartController.totalAmount <= 0?
+                          // null:
+                          () {
+                        // popularProduct.addItem(product);
+                        if(Get.find<AuthController>().userLoggedIn()){
+                          if (Get.find<LocationController>().addressList.isEmpty) {
+                            Get.toNamed(RouteHelper.getAddressPage());
+                          }else{
+                            // Get.offNamed(RouteHelper.getInitial());
+                            //Get.offAllNamed(RouteHelper.getPaymentPage("100127", Get.find<UserController>().userModel!.id));
+                            var location = Get.find<LocationController>().getUserAddress();
+                            var cart = Get.find<CartController>().getItems;
+                            var user = Get.find<UserController>().userModel;
+                            PlaceOrderBody placeOrder = PlaceOrderBody(
+                              cart: cart, 
+                              orderAmount: 100.0, 
+                              distance: 10.0, 
+                              scheduleAt: '', 
+                              orderNote: orderController.foodNote, 
+                              address: location.address, 
+                              latitude: location.latitude, 
+                              longitude: location.longitude, 
+                              contactPersonName: user!.name, 
+                              contactPersonNumber: user!.phone,
+                              orderType: orderController.orderType,
+                              paymentMethod: orderController.paymentIndex == 0? 'cash_on_delivery':'digital_payment'
+                            );
+                            // print("sipariş "+placeOrder.toJson().toString());
+                            // return;
+                            Get.find<OrderController>().placeOrder(placeOrder,_callback);
+                          }
+                        //cartController.addToCartHistory();
+                        }else{
+                          Get.toNamed(RouteHelper.getSignInPage());
+                        }
+                      },
+                      child: CommonTextButton(text: "Sipariş Ver"),
+                    ),
+                  ],
                 ),
               ],
             ):Container()
           );
         },
-      ),
+      );
+      },)
     );
   }
 
@@ -309,7 +401,11 @@ class CartPage extends StatelessWidget {
       Get.find<CartController>().clear();
       Get.find<CartController>().removeCartSharedPreference();
       Get.find<CartController>().addToCartHistory();
-      Get.offAllNamed(RouteHelper.getPaymentPage(orderID, Get.find<UserController>().userModel!.id));
+      if (Get.find<OrderController>().paymentIndex == 0) {
+        Get.offNamed(RouteHelper.getOrderSuccessPage(orderID, "success"));
+      } else {
+      Get.offNamed(RouteHelper.getPaymentPage(orderID, Get.find<UserController>().userModel!.id));
+      }
     } else {
       showCustomSnackbar(message);
     }

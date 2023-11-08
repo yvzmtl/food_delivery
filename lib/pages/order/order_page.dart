@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/base/custom_app_bar.dart';
 import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/controllers/order_controller.dart';
+import 'package:flutter_food_delivery/pages/order/view_order.dart';
 import 'package:flutter_food_delivery/utils/colors.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'package:get/get.dart';
@@ -30,9 +32,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:Text("Siparişlerim"),
-        backgroundColor: AppColors.mainColor, ),
+      appBar: CustomAppBar(title: "Siparişlerim"),
       body: Column(
         children: [
           Container(
@@ -52,8 +52,8 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
             child: TabBarView(
               controller: _tabController,
               children: [
-                Text("Sipariş 1"),
-                Text("Sipariş 2"),
+                ViewOrder(isCurrent: true),
+                ViewOrder(isCurrent: false),
             ]),
           ),
         ],
