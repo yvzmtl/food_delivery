@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery/controllers/auth_controller.dart';
 import 'package:flutter_food_delivery/controllers/popular_product_controller.dart';
 import 'package:flutter_food_delivery/controllers/recommended_product_controller.dart';
 import 'package:flutter_food_delivery/routes/route.helper.dart';
 import 'package:flutter_food_delivery/utils/dimensions.dart';
 import 'dart:async';
-
 import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     // TODO: implement initState
     super.initState();
+    Get.find<AuthController>().updateToken();
     _loadResource();
     controller = AnimationController(vsync: this,duration: Duration(seconds: 2))..forward();
     animation = CurvedAnimation(parent: controller, curve: Curves.linear);

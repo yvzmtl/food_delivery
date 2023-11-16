@@ -20,10 +20,9 @@ class AuthController extends GetxController implements GetxService{
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       authRepo.saveUserToken(response.body["token"].toString()); 
-      print("Token = "+response.body["token"].toString());
       responseModel = ResponseModel(true, response.body["token"].toString());
     } else {
-      responseModel = ResponseModel(false, response.statusText!);
+      responseModel = ResponseModel(false, response.body["errors"][0]["message"]);
     }
     _isLoading = false;
     update();
@@ -32,19 +31,18 @@ class AuthController extends GetxController implements GetxService{
 
 
     Future<ResponseModel> login(String email, String password) async{
-    print("Token geldi");
-    print("Token başlangıç = "+jsonEncode(authRepo.getUserToken().toString()));
+
     _isLoading = true;
     update();
     Response response = await authRepo.login(email,password);
+    //print("response = ${response.body["errors"][0]["message"]}");
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      print("Token bitti");
       authRepo.saveUserToken(response.body["token"].toString());
-      print("Token = "+response.body["token"].toString());
+      await authRepo.updateToken();
       responseModel = ResponseModel(true, response.body["token"].toString());
     } else {
-      responseModel = ResponseModel(false, response.statusText!);
+      responseModel = ResponseModel(false, response.body["errors"][0]["message"]);
     }
     _isLoading = false;
     update();
@@ -61,5 +59,9 @@ class AuthController extends GetxController implements GetxService{
 
    bool clearSharedData(){
     return authRepo.clearSharedData();
+   }
+
+   Future<void> updateToken() async {
+    await authRepo.updateToken();
    }
 }

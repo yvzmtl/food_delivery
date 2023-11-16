@@ -47,11 +47,7 @@ class SignUpPage extends StatelessWidget {
       }else if(password.length < 6){
         showCustomSnackbar("Şifre 6 karakterden küçük olamaz",title: "Uyarı");
       }
-      // else if(phone.length != 10){
-      //   showCustomSnackbar("Telefon numarası eksik veya hatalı girildi ",title: "Uyarı");
-      // }
       else{
-        // showCustomSnackbar("Kayıt Başarılı",title: "Uyarı");
         SignUpModel signUpModel = SignUpModel(name: name, 
           phone: phone, 
           email: email, 

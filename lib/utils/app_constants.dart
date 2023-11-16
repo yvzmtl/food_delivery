@@ -43,6 +43,8 @@ class AppConstants {
   static const String CART_LIST = "cart-list";
   static const String CART_HISTORY_LIST = "cart-history-list";
 
+   static const String TOKEN_URI = "/api/v1/customer/cm-firebase-token";
+
 
   static String datetimeFormat(String date){
     DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date);

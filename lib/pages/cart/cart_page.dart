@@ -352,6 +352,7 @@ class CartPage extends StatelessWidget {
                           () {
                         // popularProduct.addItem(product);
                         if(Get.find<AuthController>().userLoggedIn()){
+                          Get.find<AuthController>().updateToken();
                           if (Get.find<LocationController>().addressList.isEmpty) {
                             Get.toNamed(RouteHelper.getAddressPage());
                           }else{

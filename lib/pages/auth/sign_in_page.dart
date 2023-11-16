@@ -34,10 +34,10 @@ class SignInPage extends StatelessWidget {
 
         authController.login(email, password).then((status) {
           if (status.isSuccess) {
-            // Get.toNamed(RouteHelper.getInitial());
             print(" sign in page ----:---- Giriş başarılı ");
-            // Get.toNamed(RouteHelper.getCartPage());
-            Get.toNamed(RouteHelper.getInitial());
+            authController.saveUserEmailAndPassword(email, password);
+            String _token = status.message.substring(1,status.message.length);
+            Get.offNamed(RouteHelper.getInitial());
           } else {
             showCustomSnackbar(status.message);
             print(" sign in page den gelen hata mesajı : "+status.message);
